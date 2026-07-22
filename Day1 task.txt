@@ -1,0 +1,637 @@
+Date : 22/07/26
+
+User
+   │
+   ▼
+LLM
+   │
+   ▼
+Python code
+
+--The LLM returns JSON.
+
+Your Python trusts it.
+
+If one field is missing or wrong...
+
+KeyError
+TypeError
+Wrong recommendation
+Crash
+
+Production AI systems NEVER trust the LLM.
+
+--Schema First design 
+ Raw JSON
+    │
+    ▼
+LLM Response Model
+(Validation)
+    │
+Mapping Function
+    │
+    ▼ 
+Domain Model
+    │
+Business Logic
+    │
+    ▼
+API Response
+
+--pydantic : It validates the incoming data 
+--basemodel : Without BaseModel, Python wouldn't validate the input automatically.
+-- Field type : Field types tell Pydantic what kind of data each field should contain.( exg : Boolean , integer , string)
+-- constraint : Add rules to our field ( exg : phone number : 9383929010 , user entering : 9drhwi - not allowed)
+-- Model_config : Extra inputs are not permitted 
+-- Field validator : use for validating one filed 
+-- model validator : Used when validation depends on multiple fields.
+-- mode = before / after - before : it runs before pydantic validate data ( exg : {"name":"  Rahul "}) - remove spaces 
+-- mode after -- runs after validation 
+Pydantic v2 in depth: BaseModel, field types, constraints, model_config
+
+-- pydantic means validating incoming data 
+
+--Without Pydantic:
+
+user = {
+    "name": "Bansari",
+    "age": "22"
+}
+
+--With Pydantic:
+
+from pydantic import BaseModel
+
+class User(BaseModel):
+    name: str
+    age: int
+
+user = User(
+    name="Bansari",
+    age="22"
+)
+
+print(user)
+
+--Output
+
+name='Bansari' age=22
+
+
+-- Base Model :  Without BaseModel, Python wouldn't validate the input automatically.
+
+student = Student(
+    name="Rahul",
+    age="abc"
+)
+
+output : ValidationError
+age
+Input should be a valid integer
+
+--Field type : Field types tell Pydantic what kind of data each field should contain.
+
+class Employee(BaseModel):
+
+    name: str
+    age: int
+    salary: float
+    is_manager: bool
+
+-- Constraints : Add rules to our field ( exg : phone number : 9383929010 , user entering : 9drhwi - not allowed)
+
+from pydantic import Field
+
+phone: str = Field(
+    pattern=r"^\d{10}$"
+)
+
+Allowed
+
+9876543210
+
+Not allowed
+
+98ABC123
+
+-- model_config : Extra inputs are not permitted 
+
+from pydantic import BaseModel, ConfigDict
+
+class Student(BaseModel):
+
+    model_config = ConfigDict(
+        extra="forbid"
+    )
+
+    name: str
+    age: int
+
+input : Student(
+    name="Rahul",
+    age=22,
+    city="Ahmedabad"
+)
+
+output : ValidationError
+
+Extra inputs are not permitted
+
+-- Custom validation: field_validator, model_validator, mode="before" / "after"
+
+--Field validator : Field validator : use for validating one filed 
+
+from pydantic import BaseModel, field_validator
+
+class User(BaseModel):
+    name: str
+
+    @field_validator("name")
+    @classmethod
+    def remove_spaces(cls, value):
+        return value.strip()
+
+input : User(name="  Bansari  ")
+
+output : name='Bansari'
+
+-- Model Validator : model validator : Used when validation depends on multiple fields.
+
+--Mode = before / after 
+
+before : before validation (remove spaces )
+
+{
+"name":"  Rahul "
+}
+
+after : Runs after validation (use in business logic)
+
+-- Nested Models : without it example :
+{
+"name":"Rahul",
+"city":"Ahmedabad",
+"state":"Gujarat"
+}
+Pydantic automatically creates the Address object.
+example : class Hotel(BaseModel):
+
+    name:str
+    rating:float
+
+class Itinerary(BaseModel):
+
+    destination:str
+    hotel:Hotel
+
+Discriminated union --Sometimes one API can return different shapes.
+
+Example
+
+Sometimes
+
+{
+"type":"success",
+"answer":"Visit London"
+}
+
+Sometimes
+
+{
+"type":"error",
+"message":"Destination not found"
+}
+
+--Create two models.
+
+from typing import Literal
+
+class Success(BaseModel):
+
+    type:Literal["success"]
+    answer:str
+
+class Error(BaseModel):
+
+    type:Literal["error"]
+    message:str
+
+Combine them.
+
+from typing import Union, Annotated
+from pydantic import Field
+
+Response = Annotated[
+    Union[Success, Error],
+    Field(discriminator="type")
+]
+
+--Now Pydantic automatically chooses the correct model using the "type" field.
+-- model_dump : converts to dictionary 
+-- model_dump_json : converts to json format 
+-- include : Only include selected fields.
+
+input : student.model_dump(
+
+include={"name"}
+)
+
+op: {
+"name":"Rahul"
+}
+
+--exclude : remove selected fields 
+student.model_dump(
+
+exclude={"password"}
+)
+
+-- Aliases : Suppose {
+"user_name":"Rahul"
+}
+ and we want username 
+so we will do username:str=Field(alias="user_name")
+
+-- pydantic-settings for typed configuration and secret handling : Means API key is always stored in .env file for security purpose 
+
+-- Boundary design: the model's raw response type must never be your domain type
+
+One of the most important production concepts.
+
+Never trust raw LLM output.
+
+--Raw LLM : {
+"career":"AI Engineer",
+"confidence":0.91
+}
+
+--llm model : class LLMResponse(BaseModel):
+
+    career:str
+    confidence:float
+
+--Domain model : class CareerRecommendation(BaseModel):
+
+    role:str
+    score:float
+
+--Mapping : CareerRecommendation(
+
+role=response.career,
+
+score=response.confidence
+)
+This separation keeps your business logic independent of the LLM's output format.
+
+Typing : protocol : 
+
+Typed Dict : from typing import TypedDict
+
+--class Review(TypedDict):
+
+    text:str
+    rating:int
+
+Now editors and type checkers know what keys and value types are expected.
+
+-- Literal : from typing import Literal
+
+Role=Literal[
+"admin",
+"user",
+"guest"
+]
+only those values are accepted 
+
+--mypy strict mode : mypy strict mode
+
+Install
+
+pip install mypy
+
+Run
+
+mypy --strict .
+
+It detects issues such as:
+
+missing return types
+passing str where int is expected
+using None without checking
+wrong argument types
+
+--Error taxonomy: model errors vs validation errors vs transport errors vs business-rule violations
+
+--Model errors : The AI model returns unusable output 
+{
+"name":
+
+Invalid JSON.
+
+Occurs at the LLM boundary.
+
+--Validation errors : for exg age = int 
+but user enters age = abc it will create validation error 
+
+-- Transport error : communication problem 
+exg : Api timeout , network error 
+
+-- Buisness Rule violations 
+
+The data is structurally valid but breaks your application's rules.
+
+Example
+
+category="Hotel"
+
+confidence=None
+
+Both fields have valid types, but your rule says confidence is required whenever a category is assigned.
+
+This is where model_validator is commonly used, or you may raise a custom exception.
+
+
+-- Build ( in my existing AI carrer mentor agent )
+
+--Boundary 1 (config.py)
+
+...Before
+
+api_key = os.getenv("GROQ_API_KEY")
+
+Why is this untyped?
+
+Because os.getenv() returns
+
+Optional[str]
+
+It could be
+
+None
+
+...Now : class Settings(BaseSettings):
+    groq_api_key: str
+
+Now Pydantic validates it.
+
+--Boundary 2 (carrer.py)
+
+..Before 
+
+skills = Form(...)
+goal = Form(...)
+interest = Form(...)
+
+everything is plain string 
+
+...now 
+
+CareerGuidanceRequest
+
+--validates 
+
+skills
+
+interest
+
+goal
+
+-- using 
+
+min_length
+
+max_length
+
+strip()
+
+validators
+
+--boundary 3 (llm.py)
+
+LLM response 
+
+response = llm.invoke(prompt)
+
+response.content
+
+This is just a str , nothing 
+
+...now CareerGuidanceLLMResponse
+
+career_paths
+
+roadmap
+
+skills
+
+projects
+
+-- boundary 4
+
+Memory 
+
+memory.append({
+    "skills": skills,
+    "goal": goal
+})
+
+this is dict 
+
+...now : UUID
+
+timestamp
+
+request
+
+response
+
+everything has structure 
+
+2) separate LLM and domain model (llm.py , domain.py, mapper.py)
+
+original : Groq
+
+            ↓
+
+      Business Logic
+
+            ↓
+
+          HTML
+
+Now 
+
+     Groq
+      │
+      ▼
+CareerGuidanceLLMResponse
+      │
+      ▼
+   Mapper
+      │
+      ▼
+CareerRecommendation
+      │
+      ▼
+Business Logic
+      │
+      ▼
+     API
+
+4) Buisness validator 
+
+@model_validator(mode="after")
+
+5 ) Replace 
+
+--Before
+
+Everywhere
+
+os.getenv("GROQ_API_KEY")
+
+os.getenv("MODEL")
+
+os.getenv("TIMEOUT")
+
+--After
+
+Only one place
+
+config.py
+settings.groq_api_key
+
+settings.model_name
+
+settings.timeout
+
+Everything becomes typed.
+
+
+6) mypy --strict
+
+-- Before 
+
+python allowed no type
+
+def func(a):
+
+    return a
+
+--after 
+
+python -m mypy --strict app
+
+output : Success
+
+17 source files
+
+7) Discriminated union 
+
+--Before : Your endpoint always returned
+
+{
+   ...
+}
+
+--after : Success
+
+because :
+
+using
+
+type: Literal["success"]
+
+and
+
+type: Literal["error"]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
