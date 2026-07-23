@@ -12,5 +12,3 @@ class CareerGuidanceLLMResponse(BaseModel):
     internship_tips: List[str] = Field(..., min_length=1, description="Internship and application tips")
     motivation_quote: str = Field(..., description="Motivational quote or closing tip")
     formatted_markdown: str = Field(..., description="Raw formatted markdown representation")
-    category: str = Field(..., description="Category of response")
-    confidence: float = Field(..., ge=0.0, le=1.0, description="Confidence score between 0 and 1")

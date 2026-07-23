@@ -26,16 +26,12 @@ def test_career_guidance_llm_response_and_mapping() -> None:
         learning_roadmap=["Days 1-7: Python"],
         internship_tips=["Build in public"],
         motivation_quote="Stay consistent!",
-        formatted_markdown="### Markdown Guidance",
-        category="career_guidance",
-        confidence=0.95
+        formatted_markdown="### Markdown Guidance"
     )
     domain_model: CareerRecommendation = map_llm_response_to_domain(llm_resp)
     assert isinstance(domain_model, CareerRecommendation)
     assert domain_model.career_paths == ["AI Engineer", "Web Developer"]
     assert domain_model.motivation_tip == "Stay consistent!"
-    assert domain_model.category == "career_guidance"
-    assert domain_model.confidence == 0.95
 
 
 def test_domain_model_business_rule_validator() -> None:
@@ -47,9 +43,7 @@ def test_domain_model_business_rule_validator() -> None:
         learning_roadmap=["Days 1-7: Basics"],
         internship_tips=["Networking"],
         motivation_tip="Keep going!",
-        formatted_markdown="Markdown",
-        category="career_guidance",
-        confidence=0.9
+        formatted_markdown="Markdown"
     )
     assert valid_rec.career_paths == ["AI Engineer"]
 
@@ -63,9 +57,7 @@ def test_domain_model_business_rule_validator() -> None:
             learning_roadmap=["Days 1-7: Basics"],
             internship_tips=["Networking"],
             motivation_tip="Keep going!",
-            formatted_markdown="Markdown",
-            category="career_guidance",
-            confidence=0.9
+            formatted_markdown="Markdown"
         )
     except ValidationError as exc:
         failed = True
@@ -82,9 +74,7 @@ def test_discriminated_union_api_response() -> None:
         learning_roadmap=["Day 1"],
         internship_tips=["Tips"],
         motivation_tip="Quote",
-        formatted_markdown="MD",
-        category="career_guidance",
-        confidence=0.88
+        formatted_markdown="MD"
     )
     success = SuccessResponse(data=rec)
     assert success.type == "success"

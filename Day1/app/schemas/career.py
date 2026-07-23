@@ -31,7 +31,8 @@ class CareerGuidanceRequest(BaseModel):
     def sanitize_input(cls, v: str) -> str:
         if not isinstance(v, str):
             raise ValueError("Field must be a string")
-        cleaned = re.sub(r'[\x00-\x08\x0B\x0C\x0E-\x1F]', '', v).strip()
+        cleaned = v.strip()
+        cleaned = re.sub(r'[\x00-\x08\x0B\x0C\x0E-\x1F]', '', cleaned)
         if not cleaned:
             raise ValueError("Field cannot consist solely of whitespace or control characters")
         return cleaned

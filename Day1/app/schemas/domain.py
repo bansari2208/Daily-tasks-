@@ -13,8 +13,6 @@ class CareerRecommendation(BaseModel):
     internship_tips: List[str] = Field(..., min_length=1, description="Internship and application tips")
     motivation_tip: str = Field(..., description="Motivational closing tip")
     formatted_markdown: str = Field(..., description="Full formatted markdown text representation")
-    category: str = Field(..., description="Category of recommendation")
-    confidence: float = Field(..., ge=0.0, le=1.0, description="Confidence score between 0 and 1")
 
     @model_validator(mode="after")
     def validate_business_rules(self) -> Self:

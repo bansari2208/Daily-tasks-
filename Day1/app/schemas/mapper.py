@@ -12,6 +12,4 @@ def map_llm_response_to_domain(llm_resp: CareerGuidanceLLMResponse) -> CareerRec
         internship_tips=list(llm_resp.internship_tips),
         motivation_tip=llm_resp.motivation_quote,
         formatted_markdown=llm_resp.formatted_markdown,
-        category=llm_resp.category,
-        confidence=llm_resp.confidence,
     )
