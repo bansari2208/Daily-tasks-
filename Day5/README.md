@@ -1,88 +1,133 @@
-# 🎫 Ticket Classifier (`ticket-classifier`)
+# 🎫 Async Support Ticket Classifier (`ticket-classifier`)
 
-A production-grade, resilient, async LLM ticket classification Python package. Built with **bounded concurrency**, **exponential retries**, **circuit breakers**, **PII redaction**, **structured JSON logging**, **cost reporting**, and **Langfuse v4 tracing**.
+A beginner-friendly, production-grade Python package that automatically classifies customer support tickets using artificial intelligence (AI). It is built to be fast, reliable, secure, and easy to monitor.
 
 ---
 
-## 1. 📦 Package Overview
+## 1. 📌 Project Overview
 
-`ticket-classifier` is a lightweight, beginner-friendly Python package designed to handle support ticket processing asynchronously. It protects LLM workloads against rate limits (HTTP 429), server errors (HTTP 500), and outages using resilient design patterns while delivering observability out of the box.
+This project provides a reusable Python library (`ticket-classifier`) that processes customer support tickets asynchronously. It automatically sorts incoming tickets into categories (such as *Billing*, *Technical*, or *General*), assigns urgency priorities, masks sensitive personal data, tracks API costs, and records real-time dashboard telemetry.
+
+It is designed to handle network errors gracefully without crashing or slowing down.
 
 ---
 
 ## 2. ✨ Key Features
 
-- **⚡ Async & Concurrent Execution**: Process hundreds of tickets concurrently using `asyncio` and `asyncio.Semaphore`.
-- **🛡️ Resilience Patterns**:
-  - Exponential backoff with random jitter for HTTP 500 and timeouts.
-  - Automatic `Retry-After` header parsing for HTTP 429 rate limits.
-  - 3-State **Circuit Breaker** (`CLOSED`, `OPEN`, `HALF-OPEN`).
-  - Automatic failover to `MockFallbackProvider` on primary failure.
-- **🔒 PII Redaction**: Automatic regex masking of emails, phone numbers, credit card numbers, passwords, and API keys.
-- **📊 Analytics & Cost Report**: Summarizes requests, token usage, total/average cost, throughput, and P50/P95 latencies.
-- **🔍 Langfuse Tracing**: Real-time trace tracking with session grouping, tags, and metadata.
-- **🚨 Priority Prediction**: Fast heuristic priority classification (`HIGH`, `MEDIUM`, `LOW`).
+- **⚡ Fast Async Execution**: Handles multiple tickets at the same time without waiting for each one to finish sequentially.
+- **🛡️ Built-in Resilience**: Automatically retries failed requests, respects server wait times, and switches to a backup server if the main server goes down.
+- **🔒 PII Redaction**: Automatically hides sensitive data like credit card numbers, passwords, and emails before saving logs.
+- **📊 Cost & Performance Analytics**: Calculates total API costs, token counts, throughput, and average response times.
+- **🔍 Real-Time Dashboard Tracing**: Integrates with Langfuse to track every request on a visual dashboard.
+- **🚨 Urgency Priority Prediction**: Automatically tags tickets as `HIGH`, `MEDIUM`, or `LOW` priority for fast agent routing.
 
 ---
 
-## 3. ⚙️ Installation
+## 3. 📖 Key Technical Concepts (Simplified)
 
-Install the package locally in editable mode:
+- **Async / Asyncio**: Allows Python to handle many tasks at once without freezing or blocking.
+- **Semaphore**: Limits how many requests run at the exact same time to prevent overwhelming the server.
+- **Exponential Backoff**: Gradually increases wait time between retries (e.g., wait 1s, then 2s, then 4s) when an error occurs.
+- **Retry-After**: Waits for the exact number of seconds requested by the server during rate limit errors.
+- **Circuit Breaker**: Temporarily stops sending requests to a primary server if it repeatedly fails.
+- **Fallback Provider**: A backup AI service that takes over when the main service fails.
+- **PII (Personally Identifiable Information)**: Private details like email addresses, phone numbers, and credit cards.
+- **Langfuse Tracing**: A monitoring tool that creates visual step-by-step records of AI requests.
+
+---
+
+## 4. 📁 Project Structure
+
+```text
+Ticket Classifier/
+├── ticket_classifier/          # Reusable core Python package
+│   ├── __init__.py             # Public package exports
+│   ├── client.py               # Main Async LLM client (handles concurrency & retries)
+│   ├── models.py               # Typed Pydantic data schemas
+│   ├── priority.py             # Urgency prediction module (HIGH, MEDIUM, LOW)
+│   ├── logger.py               # Structured JSON log recorder
+│   ├── report.py               # Cost & performance analytics generator
+│   ├── redaction.py            # Regex-based PII masker
+│   ├── circuit_breaker.py      # 3-State circuit breaker safety logic
+│   ├── providers.py            # Primary and backup mock LLM providers
+│   ├── tracer.py               # Langfuse dashboard tracing integration
+│   └── test_*.py              # Automated unit tests (26 test cases)
+├── internal_demo_project/      # Independent project proving package reusability
+│   ├── app.py                  # Standalone app using the ticket_classifier library
+│   └── README.md               # Independent project documentation
+├── pyproject.toml              # Standard Python package installation file
+├── demo.py                     # 100-ticket batch execution demonstration script
+├── report.py                   # Standalone report runner script
+├── example_runner.py           # External library integration runner
+├── AI_REVIEW.md                # Professional code review findings
+└── README.md                   # Project documentation
+```
+
+---
+
+## 5. ⚙️ Installation
+
+To install `ticket-classifier` as a local Python package, run:
 
 ```bash
 pip install -e .
 ```
 
-Or install directly:
+*Note: `-e` stands for "editable", allowing code edits to take effect immediately.*
 
+---
+
+## 6. 🚀 How to Run
+
+### Run the Full 100-Ticket Demo
 ```bash
-pip install .
+python demo.py
+```
+
+### Run the Cost & Analytics Report
+```bash
+python report.py
+```
+
+### Run the External Package Integration Script
+```bash
+python example_runner.py
+```
+
+### Run from the Independent Consumer Project
+```bash
+cd internal_demo_project
+python app.py
 ```
 
 ---
 
-## 4. 📁 Folder Structure
+## 7. 💻 Package Usage Example
 
-```text
-ticket_classifier/
-│
-├── __init__.py         # Package entry point exposing top-level public API exports
-├── models.py           # Typed Pydantic schemas (SupportTicket, ClassificationResult, LLMLogEntry)
-├── client.py           # Resilient Async LLM client with retries, semaphore, and fallback
-├── providers.py        # Primary & fallback mock providers
-├── circuit_breaker.py  # 3-State circuit breaker
-├── logger.py           # Structured JSONL logger with OpenTelemetry fields
-├── report.py           # Batch analytics & cost report generator
-├── redaction.py        # Regex-based PII masking
-├── priority.py         # Priority prediction module
-├── tracer.py           # Langfuse v4 & LangSmith tracing integrations
-├── utils.py            # Context manager timer utility
-├── demo.py             # 100-ticket batch demo implementation
-├── test_*.py          # Automated unit test suite (26 unit tests)
-├── .env               # Langfuse environment credentials
-├── pyproject.toml      # Standard Python package build & metadata configuration
-└── README.md           # Package documentation
-```
-
----
-
-## 5. 🚀 Quick Start Example
+You can import and use `ticket-classifier` in any Python project with just a few lines of code:
 
 ```python
 import asyncio
-from ticket_classifier import AsyncLLMClient, predict_priority
+from ticket_classifier import AsyncLLMClient, predict_priority, redact_text
 
 async def main():
-    # 1. Initialize client
+    # 1. Initialize the client
     client = AsyncLLMClient(max_concurrency=5, max_retries=2)
 
-    # 2. Classify a ticket
-    result = await client.classify_ticket("Payment failed on checkout page. Card 4532 1234 5678 9012 failed.", ticket_id=1)
-    print("Classification:", result)
+    # 2. Raw ticket with sensitive credit card info
+    raw_ticket = "Payment failed on checkout page. Card 4532 1234 5678 9012 failed."
 
-    # 3. Predict priority
-    priority = predict_priority("Payment failed on checkout page", category=result["category"])
-    print("Priority:", priority)
+    # 3. Mask PII before processing
+    safe_ticket = redact_text(raw_ticket)
+
+    # 4. Classify ticket asynchronously
+    result = await client.classify_ticket(safe_ticket, ticket_id=1)
+    
+    # 5. Predict urgency level
+    priority = predict_priority(safe_ticket, category=result["category"])
+
+    print(f"Category: {result['category']}")
+    print(f"Priority: {priority.priority} (Score: {priority.score})")
 
 if __name__ == "__main__":
     asyncio.run(main())
@@ -90,151 +135,160 @@ if __name__ == "__main__":
 
 ---
 
-## 6. 📖 Example API Usage
+## 8. 🔄 Retry Logic & Rate Limit Handling
 
-### Public Package Exports (`from ticket_classifier import ...`)
-
-```python
-from ticket_classifier import (
-    AsyncLLMClient,
-    SupportTicket,
-    ClassificationResult,
-    predict_priority,
-    generate_report,
-    log_llm_call,
-    redact_text,
-    flush_langfuse_traces,
-)
-
-# PII Redaction
-masked = redact_text("Contact user@example.com or call +1-555-0199")
-# Output: "Contact [REDACTED] or call [REDACTED]"
-
-# Priority Prediction
-pred = predict_priority("API returning 500 error", category="Technical")
-# Output: PriorityResult(priority='HIGH', score=0.9, reason="Ticket contains urgent outage or payment failure keywords.")
-
-# Analytics Report
-generate_report("logs/llm_logs.jsonl", batch_time=2.5)
-```
+- **HTTP 500 & Timeouts**: If a server error occurs, the client automatically retries up to 2 times using exponential backoff with small random delays (jitter).
+- **HTTP 429 Rate Limit**: If the server says "too many requests", the client reads the `Retry-After` header and pauses execution until the server is ready.
+- **HTTP 400 Bad Request**: Bad user inputs fail immediately without wasting retry attempts.
 
 ---
 
-## 7. 💰 Cost & Latency Reporting
+## 9. 🚦 Concurrency & Semaphore Control
 
-The reporting module (`report.py`) parses structured logs (`logs/llm_logs.jsonl`) to compute operational metrics:
-
-- **Token Aggregation**: Prompt tokens, completion tokens, total tokens.
-- **Cost Metrics**: Total cost and average cost per request ($0.00010/token estimation).
-- **Latency Analysis**: Mean latency, P50 (median), and P95 percentiles.
-- **Throughput**: Requests per second (`req/s`).
-
-### Run Standalone Report:
-```bash
-python report.py
-```
+- **Semaphore (Limit = 5)**: Ensures that no more than 5 ticket requests hit the AI provider simultaneously.
+- **Why it matters**: Prevents crashing AI endpoints or exceeding API rate limits during high-volume batch workloads.
 
 ---
 
-## 8. 🔄 Retry Behaviour
+## 10. 🔌 Circuit Breaker Pattern
 
-The client manages transient network errors gracefully:
-
-- **HTTP 500 & Timeouts**: Retries up to `max_retries` with exponential backoff and random jitter (`delay = base_delay * 2^attempt + jitter`).
-- **HTTP 429 Rate Limits**: Inspects the `Retry-After` response header and pauses execution accordingly before retrying.
-- **HTTP 400 Bad Requests**: Fails immediately without retrying (invalid prompt/input).
-
----
-
-## 9. 🔌 Circuit Breaker Pattern
-
-The 3-State Circuit Breaker prevents hammering failing downstream services:
+The Circuit Breaker protects failing services by monitoring consecutive errors:
 
 ```text
-       [CLOSED] --(3 failures)--> [OPEN]
-          ^                         |
-          |                  (cooldown elapsed)
-          |                         v
-       (success) <---------- [HALF-OPEN]
+  [CLOSED] --(3 failures)--> [OPEN]
+     ^                         |
+     |                  (cooldown 1s)
+     |                         v
+  (success) <---------- [HALF-OPEN]
 ```
 
-- **CLOSED**: Normal state. Requests route to Primary Provider.
-- **OPEN**: Triggered after 3 consecutive failures. Immediately routes requests to Fallback Provider without calling Primary.
-- **HALF-OPEN**: Automatically transitions after `cooldown_seconds` (1.0s) to test a single trial request.
+- **CLOSED**: Normal operation. Requests go to the Primary Provider.
+- **OPEN**: After 3 consecutive failures, the circuit opens and routes all requests directly to the Backup Fallback Provider.
+- **HALF-OPEN**: After a 1-second cooldown, it tests 1 request on the Primary Provider. If successful, it switches back to `CLOSED`.
 
 ---
 
-## 10. 🛰️ Langfuse Tracing Integration
+## 11. 🔄 Provider Fallback System
 
-Traces every LLM request to [Langfuse Cloud](https://hipaa.cloud.langfuse.com) using the native **v4 Python SDK**.
+- If the **Primary Provider** fails all retries or if the **Circuit Breaker is OPEN**, the request automatically switches to the **MockFallbackProvider**.
+- Guarantees 100% processing completion so user tickets are never lost or dropped.
 
-### Configuration (`ticket_classifier/.env`):
-```env
-LANGFUSE_PUBLIC_KEY="pk-lf-..."
-LANGFUSE_SECRET_KEY="sk-lf-..."
-LANGFUSE_BASE_URL="https://hipaa.cloud.langfuse.com"
+---
+
+## 12. 🔒 PII Redaction & Data Governance
+
+Before saving log records, all text passes through `redact_text()` which uses regular expressions (regex) to replace sensitive data with `[REDACTED]`.
+
+- **Emails**: `john@example.com` ➔ `[REDACTED]`
+- **Phone Numbers**: `+1-555-123-4567` ➔ `[REDACTED]`
+- **Credit Cards**: `4532 1234 5678 9012` ➔ `[REDACTED]`
+- **Passwords**: `Secret123!` ➔ `[REDACTED]`
+- **API Keys**: `sk_live_998877...` ➔ `[REDACTED]`
+
+---
+
+## 13. 📊 Cost & Latency Reporting
+
+The analytics module (`report.py`) parses `logs/llm_logs.jsonl` to calculate key business metrics:
+
+```text
+==================================
+Day 4 Cost & Latency Report
+==================================
+Requests:                  100
+Primary Success:           91
+Fallback Success:          9
+Failed Requests:           0
+
+Retry Rate:                21.00%
+Average Retries/Request:   0.22
+
+Total Tokens:              1021
+Total Cost:                $0.010210
+Average Cost:              $0.000102
+
+Average Latency:           90.44 ms
+P50 Latency:               61.71 ms
+P95 Latency:               232.81 ms
+
+Batch Execution Time:      1.92 s
+Throughput:                52.08 req/s
+==================================
 ```
 
-### Trace Metadata:
-Every trace includes:
-- `session_id` (groups all batch execution traces into one session)
-- `ticket_id`, `provider`, `retry_count`, `fallback_used`, `latency_ms`
-- `tags`: `["day4", "ticket-classifier", "demo"]`
+---
+
+## 14. 🛰️ Langfuse Tracing Integration
+
+Integrates with **Langfuse v4 SDK** to record visual execution traces:
+
+- **Session Grouping**: Assigns a single `session_id` to group all 100 ticket traces in a batch execution.
+- **Tags & Metadata**: Attaches tags (`["day4", "ticket-classifier", "demo"]`) and metadata (`ticket_id`, `provider`, `retry_count`, `fallback_used`, `latency_ms`).
+- **Safe Fallback**: If credentials are missing, tracing prints `Tracing: Disabled` and processing continues without crashing.
 
 ---
 
-## 11. ⚠️ Failure Modes & Handling
+## 15. 🧪 Automated Unit Testing
 
-| Failure Scenario | Resolution / Behavior |
-| :--- | :--- |
-| Primary Provider HTTP 500 / Timeout | Exponential retries -> Fallback Provider failover. |
-| Primary Provider HTTP 429 Rate Limit | Sleeps for `Retry-After` duration -> Retries. |
-| 3 Consecutive Failures | Circuit Breaker OPENS -> Bypasses primary to Fallback Provider. |
-| Missing Langfuse Credentials | Disables tracing gracefully (`Tracing: Disabled`) without crashing. |
+Contains 26 automated unit tests covering all package components (client, logger, report, tracer, redaction, priority, models, utils).
 
----
-
-## 12. 📌 Limitations
-
-- **In-Memory Circuit Breaker**: State is tracked per process instance (not shared across distributed workers).
-- **Mock Providers**: Built with simulated network latency and mock responses for demonstration.
-- **Local File Logs**: Logs append to local JSONL files (`logs/llm_logs.jsonl`).
-
----
-
-## 13. 🧪 Running Tests
-
-Execute the full automated test suite (26 unit tests):
-
+Run all tests:
 ```bash
 python -m unittest discover -s ticket_classifier
 ```
 
 ---
 
-## 🏗️ 14. Project Architecture
+## 16. ⚠️ Failure Modes Summary
+
+| Event | Automatic Action |
+| :--- | :--- |
+| **Server Timeout / HTTP 500** | Retries up to 2 times with backoff, then switches to backup provider. |
+| **HTTP 429 Rate Limit** | Waits for `Retry-After` seconds, then retries request. |
+| **3 Primary Server Failures** | Circuit Breaker OPENS, routing traffic directly to backup provider. |
+| **Missing Tracing Keys** | Disables dashboard tracing gracefully without crashing the app. |
+
+---
+
+## 🔍 17. AI Code Review (`AI_REVIEW.md`)
+
+A formal code review document ([AI_REVIEW.md](file:///c:/Users/SVI/Desktop/Ticket%20Classifier/AI_REVIEW.md)) was generated to evaluate feature quality:
+
+1. **Case Sensitivity**: Recommends normalizing category strings (`.capitalize()`).
+2. **Enum Constraints**: Recommends `Literal["HIGH", "MEDIUM", "LOW"]` type bounds in Pydantic models.
+3. **Auditability**: Suggests logging specific matching keywords in priority explanation output.
+
+---
+
+## 🏗️ 18. Project Architecture
 
 ```text
- [Client Invocation]
+ [Incoming Ticket]
         │
         ▼
-[AsyncLLMClient] (Semaphore Limit = 5)
+[AsyncLLMClient] (Max Concurrency = 5)
         │
         ├──► [Circuit Breaker Check]
-        │         ├── CLOSED ──► [MockPrimaryProvider] ──(HTTP 429/500)──► Exponential Retries
-        │         └── OPEN ────► [MockFallbackProvider]
+        │         ├── CLOSED ──► [Primary Provider] ──(HTTP 429/500)──► Retries
+        │         └── OPEN ────► [Backup Provider]
         │
         ├──► [PII Redaction] (Masks sensitive data)
-        ├──► [JSONL Logger] (Appends to logs/llm_logs.jsonl)
-        └──► [Langfuse Tracing] (Flushes trace telemetry)
+        ├──► [JSON Logger] (Saves to logs/llm_logs.jsonl)
+        └──► [Langfuse Dashboard] (Flushes trace telemetry)
 ```
 
 ---
 
-## 🎉 15. Stretch Goal Completed
+## 🔁 19. Project Flow (Step-by-Step)
 
-- **Package Published Locally**: Installed `ticket_classifier` as a local editable package (`pip install -e .`).
-- **Second Independent Project Created**: Built `internal_demo_project/` containing `app.py` and dedicated `README.md`.
-- **Zero Code Duplication**: `app.py` consumes public exports (`AsyncLLMClient`, `SupportTicket`, `predict_priority`, `redact_text`, `flush_langfuse_traces`) directly via `from ticket_classifier import ...`.
-- **Reusability Demonstrated**: Verified end-to-end async classification, PII masking, urgency prediction, and tracing in an external standalone consumer application.
+Here is how a single ticket moves through the complete system from start to finish:
 
+1. **User Input** ➔ A raw support ticket is submitted to the application.
+2. **Async Client** ➔ Enters `AsyncLLMClient` under the `Semaphore(5)` concurrency limit.
+3. **Retry Logic** ➔ If temporary errors occur (429/500/timeout), the client retries automatically.
+4. **Circuit Breaker** ➔ If repeated primary failures occur, the circuit breaker opens to prevent server overload.
+5. **Fallback Provider** ➔ If primary retries fail or circuit is open, the backup provider processes the ticket.
+6. **Classification & Priority** ➔ The ticket is categorized (*Billing/Technical/General*) and assigned an urgency level (*HIGH/MEDIUM/LOW*).
+7. **PII Redaction & Logging** ➔ Private data is masked, and structured JSON logs are written to `logs/llm_logs.jsonl`.
+8. **Langfuse Tracing** ➔ Execution telemetry (latency, retries, provider used) is sent to the Langfuse dashboard.
+9. **Report Generation** ➔ `report.py` calculates overall cost, throughput, and performance metrics for the batch.
