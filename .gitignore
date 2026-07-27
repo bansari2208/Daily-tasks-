@@ -9,3 +9,6 @@ htmlcov/
 .venv/
 env/
 venv/
+logs/
+*.jsonl
+
