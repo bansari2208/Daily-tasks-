@@ -48,3 +48,4 @@ class PriorityResult(BaseModel):
     score: float = Field(default=0.30, ge=0.0, le=1.0)
     reason: str = "General inquiry"
 
+

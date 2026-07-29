@@ -121,3 +121,4 @@ def generate_report(log_file: str = LOG_FILE_PATH, batch_time: float = None):
 
 if __name__ == "__main__":
     generate_report()
+

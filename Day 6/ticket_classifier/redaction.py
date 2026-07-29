@@ -28,3 +28,4 @@ def redact_text(text: str) -> str:
         redacted = re.sub(pattern, "[REDACTED]", redacted)
 
     return redacted
+

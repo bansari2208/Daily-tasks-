@@ -103,3 +103,4 @@ def run_latency_experiment():
 
 if __name__ == "__main__":
     run_latency_experiment()
+

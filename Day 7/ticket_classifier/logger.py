@@ -104,3 +104,4 @@ def log_llm_call(
         f.write(json.dumps(log_entry) + "\n")
 
     return log_entry
+

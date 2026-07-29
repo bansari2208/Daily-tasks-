@@ -57,3 +57,4 @@ class CircuitBreaker:
         self.failure_count += 1
         if self.failure_count >= self.failure_threshold:
             self._set_state("OPEN")
+

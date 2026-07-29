@@ -18,3 +18,4 @@ def timer(label: str = "Operation"):
     finally:
         elapsed_ms = (time.time() - start_time) * 1000.0
         print(f"[{label}] Finished in {elapsed_ms:.2f} ms")
+
