@@ -1,0 +1,17 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+*.pyo
+*.pyd
+*.py[cod]
+*$py.class
+.coverage
+htmlcov/
+.hypothesis/
+.env
+env/
+venv/
+logs/
+*.jsonl
+*.log
