@@ -1,0 +1,47 @@
+{
+  "timestamp": "2026-08-02T17:36:42.266067+00:00",
+  "temperature": 0,
+  "evaluated_inputs": 20,
+  "metrics": {
+    "original_prompt": {
+      "total": 20,
+      "json_valid_pct": 100.0,
+      "schema_valid_pct": 80.0,
+      "instruction_followed_pct": 100.0,
+      "no_extra_text_pct": 75.0,
+      "overall_pass_pct": 75.0
+    },
+    "production_prompt": {
+      "total": 20,
+      "json_valid_pct": 100.0,
+      "schema_valid_pct": 100.0,
+      "instruction_followed_pct": 100.0,
+      "no_extra_text_pct": 100.0,
+      "overall_pass_pct": 100.0
+    },
+    "positive_instruction": {
+      "total": 20,
+      "json_valid_pct": 100.0,
+      "schema_valid_pct": 100.0,
+      "instruction_followed_pct": 100.0,
+      "no_extra_text_pct": 100.0,
+      "overall_pass_pct": 100.0
+    },
+    "negative_instruction": {
+      "total": 20,
+      "json_valid_pct": 100.0,
+      "schema_valid_pct": 100.0,
+      "instruction_followed_pct": 100.0,
+      "no_extra_text_pct": 100.0,
+      "overall_pass_pct": 90.0
+    }
+  },
+  "largest_improvement": {
+    "factor": "Schema-First Output Specification + Role Separation",
+    "reason": "Deriving the JSON output specification directly from the Pydantic schema eliminated ambiguous key names, while Role Separation isolated System persona and Developer constraints from dynamic User ticket inputs."
+  },
+  "ignored_instruction": {
+    "instruction": "Do not output conversational preamble or explanations outside JSON.",
+    "reason": "Models without explicit Developer role constraints or System persona boundaries default to polite conversational assistant behaviors ('Here is your JSON response: ...')."
+  }
+}

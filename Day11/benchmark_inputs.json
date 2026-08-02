@@ -1,0 +1,22 @@
+[
+  {"id": 1, "text": "My card was charged $49.00 twice on the checkout page. Order #9812."},
+  {"id": 2, "text": "How do I change my account email address from user@old.com to user@new.com?"},
+  {"id": 3, "text": "CRITICAL: Database connection pool exhausted on production API server us-east-1."},
+  {"id": 4, "text": "Can I export my monthly billing invoices to PDF format?"},
+  {"id": 5, "text": "The mobile iOS app crashes immediately upon opening after v2.4 update."},
+  {"id": 6, "text": "Where can I find the API documentation for webhook subscription endpoints?"},
+  {"id": 7, "text": "Unauthorized login attempt detected from unknown IP 192.168.1.100. Lock my account."},
+  {"id": 8, "text": "Payment gateway returns HTTP 500 error when processing Visa transactions."},
+  {"id": 9, "text": "Need to upgrade our subscription from Team Plan to Enterprise Plan for 50 seats."},
+  {"id": 10, "text": "Dashboard analytics charts are loading slowly taking over 15 seconds."},
+  {"id": 11, "text": "I forgot my password and the reset link email is not arriving in inbox."},
+  {"id": 12, "text": "API rate limits are too restrictive for our bulk data synchronization batch job."},
+  {"id": 13, "text": "Received invoice #INV-4021 with incorrect sales tax calculation for NY state."},
+  {"id": 14, "text": "SSL certificate expired on staging environment endpoint https://staging.example.com."},
+  {"id": 15, "text": "Feature request: Add dark mode toggle to user settings page."},
+  {"id": 16, "text": "SAML SSO integration failing with invalid assertion signature error."},
+  {"id": 17, "text": "Requesting a pro-rated refund after cancelling annual subscription on Day 3."},
+  {"id": 18, "text": "CSV user import tool throws unhandled NullPointer exception on line 42."},
+  {"id": 19, "text": "System status page reports degraded performance in EU region datacenters."},
+  {"id": 20, "text": "How do I invite team members and assign admin role permissions?"}
+]
