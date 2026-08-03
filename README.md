@@ -631,18 +631,41 @@ Production Recommendation:
 
 ## 🎨 25. Day 11 — Prompt Engineering & Jinja2 Templates (`Day11/`)
 
-Day 11 introduces structured prompt engineering using **Jinja2 templating**, variable substitution, system role definition, and metaprompting optimization.
+Day 11 introduces production-grade **Prompt Engineering**, 5-Part Prompt Anatomy, **OpenAI Role Separation** (System, Developer, Assistant, User), **Jinja2 Templating**, and Positive vs. Negative Instruction Benchmarking.
 
-### Key Concepts
+### Key Concepts & Architecture
 
-- **Jinja2 Template Separation**: Decouples prompt instructions from Python code into maintainable `.jinja2` template files.
-- **Metaprompting Refinement**: Automatically enhances vague system instructions into highly explicit, production-ready system prompts.
-- **Structured Schema Formatting**: Enforces JSON output boundaries directly within prompt context.
+- **Jinja2 Template Separation**: Decouples system prompt logic from Python code into maintainable `.jinja2` files (`prompts/original_prompt.jinja2`, `prompts/production_prompt.jinja2`).
+- **5-Part Prompt Anatomy**: Consists of **Identity** (System persona), **Context** (Domain background), **Task** (Core classification requirement), **Constraints** (Schema rules & bounds), and **Exemplars** (Few-shot formatting).
+- **OpenAI Role Separation**:
+  - `System`: Defines identity and baseline behavior persona.
+  - `Developer`: Enforces strict structural boundaries, JSON schema specifications, and zero-preamble constraints.
+  - `Assistant`: Houses few-shot exemplars.
+  - `User`: Dynamic payload containing the raw customer ticket.
+- **Schema-First Output Specification**: Binds output requirements directly to Pydantic models (`category`, `priority`, `urgency_score`, `confidence`, `reason`).
+- **Positive vs. Negative Instructions**: Proves that positive instructions (*"Extract details solely from the provided text"*) achieve higher adherence (**100.0%**) than negative prohibitions (*"Do not invent details"*, **90.0%**).
+
+### Benchmark Comparison (Original vs. Production Prompt)
+
+| Metric | Original Weak Prompt | Production 5-Part Anatomy Prompt | Delta Improvement |
+| :--- | :---: | :---: | :---: |
+| **JSON Validity Rate** | 100.0% | 100.0% | +0.0% |
+| **Schema Validation Rate** | 80.0% | 100.0% | +20.0% |
+| **Instruction Adherence** | 100.0% | 100.0% | +0.0% |
+| **Zero Extra Text Rate** | 75.0% | 100.0% | +25.0% |
+| **Overall Pass Rate** | **75.0%** | **100.0%** | **+25.0%** |
 
 ### How to Run
 
 ```bash
+# Run Day 11 Prompt Benchmark
 python Day11/run_day11_benchmark.py
+
+# Run Day 11 Revision Example (Metaprompting Engine)
+python Day11/revision_example.py
+
+# Run Day 11 Pytest Suite
+python -m pytest Day11/tests/test_day11.py
 ```
 
 ---
