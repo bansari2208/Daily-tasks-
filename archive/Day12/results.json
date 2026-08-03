@@ -1,0 +1,35 @@
+{
+  "Zero-shot": {
+    "prompt_tokens": 85,
+    "comp_tokens": 20,
+    "cost_1k": 0.08,
+    "accuracy": 73.3,
+    "latency_ms": 75.0,
+    "json_val": 100.0,
+    "struct_rel": 90.0,
+    "total_tokens": 105,
+    "seed": 42
+  },
+  "Three-shot": {
+    "prompt_tokens": 310,
+    "comp_tokens": 20,
+    "cost_1k": 0.25,
+    "accuracy": 93.3,
+    "latency_ms": 115.0,
+    "json_val": 100.0,
+    "struct_rel": 100.0,
+    "total_tokens": 330,
+    "seed": 42
+  },
+  "Eight-shot": {
+    "prompt_tokens": 780,
+    "comp_tokens": 20,
+    "cost_1k": 0.62,
+    "accuracy": 96.7,
+    "latency_ms": 195.0,
+    "json_val": 100.0,
+    "struct_rel": 100.0,
+    "total_tokens": 800,
+    "seed": 42
+  }
+}
