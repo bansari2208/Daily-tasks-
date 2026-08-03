@@ -116,3 +116,37 @@ def get_playbook_version() -> str:
 def get_playbook_last_updated() -> str:
     """Returns the last updated date of the playbook."""
     return PLAYBOOK_LAST_UPDATED
+
+
+def get_runner_up_model(task_type: str) -> str:
+    """Returns the runner-up candidate model for the detected task type."""
+    t_type = task_type.upper()
+    if t_type == "MULTI_STEP_REASONING":
+        return "GPT-4.1 Mini"
+    elif t_type in ("BILLING", "TECHNICAL"):
+        return "GPT-4.1 Nano"
+    return "GPT-4.1 Mini"
+
+
+def get_revisit_conditions() -> list:
+    """Returns exact trigger conditions required to revisit model selection decisions."""
+    return [
+        "If average latency exceeds 500ms over a 24-hour monitoring window",
+        "If total operational LLM cost doubles baseline budget",
+        "If ticket complexity distribution shifts above 30% complex tickets",
+        "If reasoning accuracy drops below 90% in weekly automated benchmarks",
+    ]
+
+
+def get_production_guardrails() -> dict:
+    """Returns strict Day 10 production guardrails for inference control."""
+    return {
+        "max_latency_ms": 500,
+        "max_retry_count": 2,
+        "temperature_default": 0.0,
+        "top_p_default": 0.7,
+        "max_cost_per_request": 0.005,
+        "fallback_strategy": "Primary (MockPrimary) -> Fallback (MockFallback) -> CircuitBreaker (Open after 3 consecutive failures)",
+        "escalation_rules": "Escalate to o3-mini or Human Review Queue if ticket complexity is COMPLEX or confidence < 0.80",
+    }
+
