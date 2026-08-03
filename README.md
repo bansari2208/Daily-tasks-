@@ -620,9 +620,63 @@ Why this model?        : Best for complex multi-step rule evaluation and reasoni
 Why not Nano?          : Nano lacks deep reasoning capabilities for edge cases.
 Why not Mini?          : Mini is cheaper but has lower accuracy on multi-step reasoning.
 ----------------------------------
+==================================
 Production Recommendation:
   Hybrid Routing (Nano -> Mini -> o3-mini)
   Dynamic Cost Savings vs o3-mini: 62.2%
 ==================================
 ```
+
+---
+
+## 🎨 25. Day 11 — Prompt Engineering & Jinja2 Templates (`Day11/`)
+
+Day 11 introduces structured prompt engineering using **Jinja2 templating**, variable substitution, system role definition, and metaprompting optimization.
+
+### Key Concepts
+
+- **Jinja2 Template Separation**: Decouples prompt instructions from Python code into maintainable `.jinja2` template files.
+- **Metaprompting Refinement**: Automatically enhances vague system instructions into highly explicit, production-ready system prompts.
+- **Structured Schema Formatting**: Enforces JSON output boundaries directly within prompt context.
+
+### How to Run
+
+```bash
+python Day11/run_day11_benchmark.py
+```
+
+---
+
+## ⚡ 26. Day 12 — Few-Shot Prompting & Example Selection (`Day12/`)
+
+Day 12 implements **Few-Shot Prompting**, dynamic exemplar retrieval, ordering sensitivity detection, and cost-accuracy diminishing returns analysis.
+
+### Key Deliverables & Features
+
+- **30-Item Labelled Evaluation Dataset (`Day12/labelled_dataset.json`)**: Contains 30 tickets including 6 production edge cases (ambiguous request, multiple issues, empty message, long text, mixed billing+tech, noisy text/emojis).
+- **Few-Shot Benchmarking (`Day12/run_fewshot_benchmark.py`)**: Evaluates **Zero-shot** (73.3%), **Three-shot** (93.3%), and **Eight-shot** (96.7%) performance.
+- **Ordering Sensitivity Experiment (`Day12/ordering_experiment.py`)**: Tests 3-shot prompt permutations (Order A, B, C) and flags `Prompt is FRAGILE due to ordering sensitivity` when accuracy spread exceeds 5%.
+- **Accuracy vs. Cost Diminishing Returns (`Day12/cost_analysis.py`)**: Evaluates 0, 3, 8, 12 shots. Determines **Three-Shot** as the optimal ROI operating point ($0.25 / 1k requests).
+- **Dynamic Few-Shot Selector (`Day12/dynamic_selector.py`)**: Dynamically retrieves high-similarity exemplars for incoming tickets, achieving **96.7% accuracy** (winning over static fixed examples).
+- **Intentionally Bad Examples Analysis (`Day12/bad_examples_analysis.md`)**: Demonstrates a **-40.0% accuracy drop** when using poorly formatted exemplars.
+- **Reproducible Train/Val/Test Split (`Day12/revision_example.py`)**: Uses `random.seed(42)` and list slicing for reproducible dataset partitioning.
+- **Interactive Live Demo (`Day12/demo_day12.py`)**: 8-step sequential manager presentation script.
+
+### How to Run
+
+```bash
+# Run Complete Interactive Live Demo
+python Day12/demo_day12.py
+
+# Run Individual Tasks
+python Day12/run_fewshot_benchmark.py
+python Day12/ordering_experiment.py
+python Day12/cost_analysis.py
+python Day12/dynamic_selector.py
+python Day12/revision_example.py
+
+# Run Day 12 Pytest Suite
+python -m pytest tests/test_day12.py
+```
+
 

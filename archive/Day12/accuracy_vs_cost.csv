@@ -1,5 +1,0 @@
-Examples,Accuracy_Pct,Prompt_Tokens,Completion_Tokens,Total_Tokens,Cost_Per_1k
-0,73.3,85,20,105,0.08
-3,93.3,310,20,330,0.25
-8,96.7,780,20,800,0.62
-12,96.7,1150,20,1170,0.91
