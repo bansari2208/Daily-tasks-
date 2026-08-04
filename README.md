@@ -702,4 +702,32 @@ python Day12/revision_example.py
 python -m pytest tests/test_day12.py
 ```
 
+---
+
+## 🛡️ 27. Day 13 — Response Model Layer & Validation Boundaries (`Day13/`)
+
+Day 13 implements **Response Model Layer validation**, application boundary enforcement, **Bounded Self-Repair Loops**, 50-sample failure taxonomy analysis, explicit **`UNKNOWN` category fallback** for hallucination mitigation, **Partial Result Recovery**, and Constrained Decoding benchmarking.
+
+### Key Deliverables & Features
+
+- **Application Boundary Validation (`Day13/validation_boundary.py`)**: Intercepts raw LLM JSON outputs at the edge before data enters business logic, ensuring downstream modules operate strictly on clean, validated Pydantic objects.
+- **Bounded Self-Repair Loop (`Day13/self_repair.py`)**: Automatically feeds validation errors back to the model for targeted retry repair, evaluating retry budget performance across 1, 2, 3, and 4 retry limits.
+- **50-Sample Failure Taxonomy (`Day13/failure_taxonomy.py`)**: Collects and analyzes 50 real-world validation failure samples across 8 failure categories, generating markdown taxonomy reports (`Day13/reports/failure_taxonomy.md`) and counts CSVs (`Day13/reports/failure_counts.csv`).
+- **Explicit `UNKNOWN` Category Fallback (`Day13/unknown_schema_demo.py`)**: Adds an explicit `UNKNOWN` category to the `FlexibleTicketResponse` model to mitigate hallucination on ambiguous, out-of-domain tickets.
+- **Partial Result Recovery (`Day13/partial_results.py`)**: Salvages valid fields into `valid_fields` while isolating broken fields in `field_errors` so valid extracted data is never discarded.
+- **Constrained Decoding vs. Self-Repair Benchmark (`Day13/constrained_vs_repair.py`)**: Compares latency, retries, cost, and validity across 50 iterations to provide production deployment recommendations (`Day13/reports/constrained_vs_repair.md`).
+- **Structured Validation Logging (`Day13/logger.py`)**: Logs validation events, timestamps, retry attempts, and error types to `Day13/logs/day13_validation.jsonl`.
+- **Interactive Manager Demo (`Day13/demo_day13.py`)**: 10-step sequential manager presentation script.
+
+### How to Run
+
+```bash
+# Run Complete Interactive Live Demo
+python Day13/demo_day13.py
+
+# Run Day 13 Pytest Suite
+python -m pytest tests/test_day13.py
+```
+
+
 
