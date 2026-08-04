@@ -1,0 +1,252 @@
+[
+  {
+    "ticket_id": 1,
+    "status": "VALID",
+    "category": "Billing"
+  },
+  {
+    "ticket_id": 2,
+    "status": "VALID",
+    "category": "Billing"
+  },
+  {
+    "ticket_id": 3,
+    "status": "VALID",
+    "category": "Billing"
+  },
+  {
+    "ticket_id": 4,
+    "status": "VALID",
+    "category": "Billing"
+  },
+  {
+    "ticket_id": 5,
+    "status": "VALID",
+    "category": "Billing"
+  },
+  {
+    "ticket_id": 6,
+    "status": "VALID",
+    "category": "Billing"
+  },
+  {
+    "ticket_id": 7,
+    "status": "VALID",
+    "category": "Billing"
+  },
+  {
+    "ticket_id": 8,
+    "status": "VALID",
+    "category": "Billing"
+  },
+  {
+    "ticket_id": 9,
+    "status": "VALID",
+    "category": "Billing"
+  },
+  {
+    "ticket_id": 10,
+    "status": "VALID",
+    "category": "Billing"
+  },
+  {
+    "ticket_id": 11,
+    "status": "VALID",
+    "category": "Billing"
+  },
+  {
+    "ticket_id": 12,
+    "status": "VALID",
+    "category": "Billing"
+  },
+  {
+    "ticket_id": 13,
+    "status": "VALID",
+    "category": "Billing"
+  },
+  {
+    "ticket_id": 14,
+    "status": "VALID",
+    "category": "Billing"
+  },
+  {
+    "ticket_id": 15,
+    "status": "VALID",
+    "category": "Billing"
+  },
+  {
+    "ticket_id": 16,
+    "status": "VALID",
+    "category": "Billing"
+  },
+  {
+    "ticket_id": 17,
+    "status": "VALID",
+    "category": "Billing"
+  },
+  {
+    "ticket_id": 18,
+    "status": "VALID",
+    "category": "Billing"
+  },
+  {
+    "ticket_id": 19,
+    "status": "VALID",
+    "category": "Billing"
+  },
+  {
+    "ticket_id": 20,
+    "status": "VALID",
+    "category": "Billing"
+  },
+  {
+    "ticket_id": 21,
+    "status": "VALID",
+    "category": "Billing"
+  },
+  {
+    "ticket_id": 22,
+    "status": "VALID",
+    "category": "Billing"
+  },
+  {
+    "ticket_id": 23,
+    "status": "VALID",
+    "category": "Billing"
+  },
+  {
+    "ticket_id": 24,
+    "status": "VALID",
+    "category": "Billing"
+  },
+  {
+    "ticket_id": 25,
+    "status": "VALID",
+    "category": "Billing"
+  },
+  {
+    "ticket_id": 26,
+    "status": "VALID",
+    "category": "Billing"
+  },
+  {
+    "ticket_id": 27,
+    "status": "VALID",
+    "category": "Billing"
+  },
+  {
+    "ticket_id": 28,
+    "status": "VALID",
+    "category": "Billing"
+  },
+  {
+    "ticket_id": 29,
+    "status": "VALID",
+    "category": "Billing"
+  },
+  {
+    "ticket_id": 30,
+    "status": "VALID",
+    "category": "Billing"
+  },
+  {
+    "ticket_id": 31,
+    "status": "VALID",
+    "category": "Billing"
+  },
+  {
+    "ticket_id": 32,
+    "status": "VALID",
+    "category": "Billing"
+  },
+  {
+    "ticket_id": 33,
+    "status": "VALID",
+    "category": "Billing"
+  },
+  {
+    "ticket_id": 34,
+    "status": "VALID",
+    "category": "Billing"
+  },
+  {
+    "ticket_id": 35,
+    "status": "VALID",
+    "category": "Billing"
+  },
+  {
+    "ticket_id": 36,
+    "status": "UNKNOWN_HANDLED",
+    "category": "UNKNOWN"
+  },
+  {
+    "ticket_id": 37,
+    "status": "UNKNOWN_HANDLED",
+    "category": "UNKNOWN"
+  },
+  {
+    "ticket_id": 38,
+    "status": "UNKNOWN_HANDLED",
+    "category": "UNKNOWN"
+  },
+  {
+    "ticket_id": 39,
+    "status": "UNKNOWN_HANDLED",
+    "category": "UNKNOWN"
+  },
+  {
+    "ticket_id": 40,
+    "status": "UNKNOWN_HANDLED",
+    "category": "UNKNOWN"
+  },
+  {
+    "ticket_id": 41,
+    "status": "UNKNOWN_HANDLED",
+    "category": "UNKNOWN"
+  },
+  {
+    "ticket_id": 42,
+    "status": "UNKNOWN_HANDLED",
+    "category": "UNKNOWN"
+  },
+  {
+    "ticket_id": 43,
+    "status": "UNKNOWN_HANDLED",
+    "category": "UNKNOWN"
+  },
+  {
+    "ticket_id": 44,
+    "status": "UNKNOWN_HANDLED",
+    "category": "UNKNOWN"
+  },
+  {
+    "ticket_id": 45,
+    "status": "UNKNOWN_HANDLED",
+    "category": "UNKNOWN"
+  },
+  {
+    "ticket_id": 46,
+    "status": "UNKNOWN_HANDLED",
+    "category": "UNKNOWN"
+  },
+  {
+    "ticket_id": 47,
+    "status": "UNKNOWN_HANDLED",
+    "category": "UNKNOWN"
+  },
+  {
+    "ticket_id": 48,
+    "status": "UNKNOWN_HANDLED",
+    "category": "UNKNOWN"
+  },
+  {
+    "ticket_id": 49,
+    "status": "UNKNOWN_HANDLED",
+    "category": "UNKNOWN"
+  },
+  {
+    "ticket_id": 50,
+    "status": "UNKNOWN_HANDLED",
+    "category": "UNKNOWN"
+  }
+]

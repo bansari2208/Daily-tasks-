@@ -1,0 +1,60 @@
+[
+  {"id": 1, "raw": "{\"ticket_id\": 101, \"category\": \"Billing\"}", "expected_category": "Missing required field", "error": "Missing reasoning field"},
+  {"id": 2, "raw": "{\"category\": \"Technical\", \"reasoning\": \"Crash report\"}", "expected_category": "Missing required field", "error": "Missing ticket_id"},
+  {"id": 3, "raw": "{\"ticket_id\": 103, \"priority\": \"HIGH\"}", "expected_category": "Missing required field", "error": "Missing category field"},
+  {"id": 4, "raw": "{\"ticket_id\": 104, \"category\": \"Account\"}", "expected_category": "Missing required field", "error": "Missing priority and reasoning"},
+  {"id": 5, "raw": "{\"category\": \"Refund\", \"confidence\": 0.9}", "expected_category": "Missing required field", "error": "Missing ticket_id"},
+  {"id": 6, "raw": "{\"ticket_id\": 106, \"reasoning\": \"Payment failed\"}", "expected_category": "Missing required field", "error": "Missing category"},
+
+  {"id": 7, "raw": "{\"ticket_id\": \"107\", \"category\": \"Billing\", \"confidence\": \"high\", \"reasoning\": \"User billed twice\"}", "expected_category": "Wrong datatype", "error": "confidence string instead of float"},
+  {"id": 8, "raw": "{\"ticket_id\": 108, \"category\": \"Technical\", \"confidence\": \"0.95\", \"reasoning\": \"App freeze\"}", "expected_category": "Wrong datatype", "error": "confidence string value"},
+  {"id": 9, "raw": "{\"ticket_id\": 109, \"category\": \"Account\", \"confidence\": true, \"reasoning\": \"Login bug\"}", "expected_category": "Wrong datatype", "error": "confidence boolean instead of float"},
+  {"id": 10, "raw": "{\"ticket_id\": 110, \"category\": \"Security\", \"priority\": 1, \"reasoning\": \"Password reset\"}", "expected_category": "Wrong datatype", "error": "priority int instead of string enum"},
+  {"id": 11, "raw": "{\"ticket_id\": 111, \"category\": \"Refund\", \"confidence\": [0.9], \"reasoning\": \"Money back\"}", "expected_category": "Wrong datatype", "error": "confidence list"},
+  {"id": 12, "raw": "{\"ticket_id\": \"ABC\", \"category\": \"General\", \"confidence\": 0.8, \"reasoning\": \"General inquiry\"}", "expected_category": "Wrong datatype", "error": "ticket_id non-numeric string"},
+
+  {"id": 13, "raw": "{\"ticket_id\": 113, \"category\": \"Payment\", \"priority\": \"HIGH\", \"reasoning\": \"Card declined\"}", "expected_category": "Invalid enum", "error": "category Payment not in enum"},
+  {"id": 14, "raw": "{\"ticket_id\": 114, \"category\": \"Technical\", \"priority\": \"CRITICAL\", \"reasoning\": \"Server down\"}", "expected_category": "Invalid enum", "error": "priority CRITICAL not in enum"},
+  {"id": 15, "raw": "{\"ticket_id\": 115, \"category\": \"Subscription\", \"priority\": \"LOW\", \"reasoning\": \"Cancel plan\"}", "expected_category": "Invalid enum", "error": "category Subscription not in enum"},
+  {"id": 16, "raw": "{\"ticket_id\": 116, \"category\": \"Billing\", \"priority\": \"URGENT_NOW\", \"reasoning\": \"Overcharged\"}", "expected_category": "Invalid enum", "error": "priority URGENT_NOW"},
+  {"id": 17, "raw": "{\"ticket_id\": 117, \"category\": \"Hardware\", \"priority\": \"MEDIUM\", \"reasoning\": \"Broken screen\"}", "expected_category": "Invalid enum", "error": "category Hardware"},
+
+  {"id": 18, "raw": "{\"ticket_id\": 118, \"category\": \"Billing\", \"priority\": \"LOW\", \"confidence\": 0.9, \"reasoning\": \"Invoice request\", \"user_sentiment\": \"angry\"}", "expected_category": "Extra field", "error": "Unexpected field user_sentiment"},
+  {"id": 19, "raw": "{\"ticket_id\": 119, \"category\": \"Technical\", \"priority\": \"HIGH\", \"confidence\": 0.9, \"reasoning\": \"Bug\", \"debug_logs\": \"traceback...\"}", "expected_category": "Extra field", "error": "Unexpected debug_logs"},
+  {"id": 20, "raw": "{\"ticket_id\": 120, \"category\": \"Security\", \"priority\": \"URGENT\", \"confidence\": 1.0, \"reasoning\": \"Phishing\", \"assigned_agent\": \"John\"}", "expected_category": "Extra field", "error": "Unexpected assigned_agent"},
+  {"id": 21, "raw": "{\"ticket_id\": 121, \"category\": \"General\", \"priority\": \"LOW\", \"confidence\": 0.8, \"reasoning\": \"Question\", \"tags\": [\"faq\"]}", "expected_category": "Extra field", "error": "Unexpected tags"},
+  {"id": 22, "raw": "{\"ticket_id\": 122, \"category\": \"Refund\", \"priority\": \"HIGH\", \"confidence\": 0.95, \"reasoning\": \"Duplicate charge\", \"internal_note\": \"VIP customer\"}", "expected_category": "Extra field", "error": "Unexpected internal_note"},
+
+  {"id": 23, "raw": "{\"ticket_id\": 123, \"category\": \"Billing\", \"priority\": \"HIGH\", reasoning: \"Unquoted key\"}", "expected_category": "Malformed JSON", "error": "Unquoted key in JSON"},
+  {"id": 24, "raw": "{\"ticket_id\": 124, \"category\": \"Technical\", \"reasoning\": \"Unclosed brace\"", "expected_category": "Malformed JSON", "error": "Unclosed JSON object"},
+  {"id": 25, "raw": "{\"ticket_id\": 125, \"category\": \"Account\", \"priority\": \"LOW\",}", "expected_category": "Malformed JSON", "error": "Trailing comma"},
+  {"id": 26, "raw": "Here is the response: {\"ticket_id\": 126, \"category\": \"Billing\"}", "expected_category": "Malformed JSON", "error": "Markdown text around JSON"},
+  {"id": 27, "raw": "{\"ticket_id\": 127, 'category': 'Refund', 'reasoning': 'Single quotes'}", "expected_category": "Malformed JSON", "error": "Single quoted JSON"},
+  {"id": 28, "raw": "{\"ticket_id\": 128, \"category\": \"Security\", \"reasoning\": \"Control \\x00 char\"}", "expected_category": "Malformed JSON", "error": "Invalid escape character"},
+
+  {"id": 29, "raw": "{\"ticket_id\": 129, \"category\": \"Supernatural\", \"priority\": \"HIGH\", \"reasoning\": \"Ghost in system\"}", "expected_category": "Hallucinated value", "error": "Hallucinated category Supernatural"},
+  {"id": 30, "raw": "{\"ticket_id\": 130, \"category\": \"AlienInvasion\", \"priority\": \"URGENT\", \"reasoning\": \"UFO alert\"}", "expected_category": "Hallucinated value", "error": "Hallucinated category AlienInvasion"},
+  {"id": 31, "raw": "{\"ticket_id\": 131, \"category\": \"CryptoStaking\", \"priority\": \"LOW\", \"reasoning\": \"Staking yield\"}", "expected_category": "Hallucinated value", "error": "Hallucinated domain CryptoStaking"},
+  {"id": 32, "raw": "{\"ticket_id\": 132, \"category\": \"MagicSupport\", \"priority\": \"HIGH\", \"reasoning\": \"Spell failed\"}", "expected_category": "Hallucinated value", "error": "Hallucinated category MagicSupport"},
+  {"id": 33, "raw": "{\"ticket_id\": 133, \"category\": \"Telepathy\", \"priority\": \"URGENT\", \"reasoning\": \"Mind reading\"}", "expected_category": "Hallucinated value", "error": "Hallucinated category Telepathy"},
+  {"id": 34, "raw": "{\"ticket_id\": 134, \"category\": \"QuantumPhysics\", \"priority\": \"MEDIUM\", \"reasoning\": \"Entanglement error\"}", "expected_category": "Hallucinated value", "error": "Hallucinated domain"},
+
+  {"id": 35, "raw": "{\"ticket_id\": 135, \"category\": \"SalesInquiry\", \"priority\": \"LOW\", \"reasoning\": \"Enterprise pricing quote\"}", "expected_category": "Unknown category", "error": "Out of domain SalesInquiry"},
+  {"id": 36, "raw": "{\"ticket_id\": 136, \"category\": \"Partnership\", \"priority\": \"MEDIUM\", \"reasoning\": \"Vendor request\"}", "expected_category": "Unknown category", "error": "Out of domain Partnership"},
+  {"id": 37, "raw": "{\"ticket_id\": 137, \"category\": \"JobApplication\", \"priority\": \"LOW\", \"reasoning\": \"Resume attached\"}", "expected_category": "Unknown category", "error": "Out of domain JobApplication"},
+  {"id": 38, "raw": "{\"ticket_id\": 138, \"category\": \"PressContact\", \"priority\": \"LOW\", \"reasoning\": \"Media interview\"}", "expected_category": "Unknown category", "error": "Out of domain PressContact"},
+  {"id": 39, "raw": "{\"ticket_id\": 139, \"category\": \"LegalNotice\", \"priority\": \"URGENT\", \"reasoning\": \"DMCA claim\"}", "expected_category": "Unknown category", "error": "Out of domain LegalNotice"},
+
+  {"id": 40, "raw": "{\"ticket_id\": 140, \"category\": \"Billing\", \"confidence\": 95.0, \"reasoning\": \"Confidence out of 0-1 range\"}", "expected_category": "Other", "error": "Confidence score 95 exceeds le=1.0 constraint"},
+  {"id": 41, "raw": "{\"ticket_id\": 141, \"category\": \"Technical\", \"confidence\": -0.5, \"reasoning\": \"Negative confidence\"}", "expected_category": "Other", "error": "Confidence score negative"},
+  {"id": 42, "raw": "{\"ticket_id\": 142, \"category\": \"Account\", \"confidence\": 0.9, \"reasoning\": \"x\"}", "expected_category": "Other", "error": "Reasoning fails min_length constraint"},
+  {"id": 43, "raw": "{\"ticket_id\": -5, \"category\": \"Security\", \"confidence\": 0.9, \"reasoning\": \"Negative ticket ID\"}", "expected_category": "Other", "error": "Negative ticket_id validation issue"},
+  {"id": 44, "raw": "{\"ticket_id\": 144, \"category\": \"Refund\", \"confidence\": 0.9, \"reasoning\": \"  \"}", "expected_category": "Other", "error": "Reasoning whitespace only"},
+
+  {"id": 45, "raw": "{\"ticket_id\": 145, \"category\": \"MissingEnum\", \"priority\": \"INVALID\", \"reasoning\": \"Multiple bad enums\"}", "expected_category": "Invalid enum", "error": "Multiple invalid enums"},
+  {"id": 46, "raw": "{\"ticket_id\": 146, \"category\": \"Billing\", \"priority\": \"HIGH\", \"confidence\": \"bad_float\", \"reasoning\": \"Invalid float\"}", "expected_category": "Wrong datatype", "error": "Non-numeric confidence string"},
+  {"id": 47, "raw": "{\"ticket_id\": 147, \"category\": \"Technical\", \"extra_1\": 1, \"extra_2\": 2}", "expected_category": "Extra field", "error": "Multiple extra fields"},
+  {"id": 48, "raw": "{\"ticket_id\": 148, \"category\": \"BOGUS_CATEGORY\", \"reasoning\": \"Random string\"}", "expected_category": "Hallucinated value", "error": "BOGUS_CATEGORY string"},
+  {"id": 49, "raw": "{\"ticket_id\": 149, \"category\": \"General\", \"reasoning\": \"Valid reasoning\", \"confidence\": 10.0}", "expected_category": "Other", "error": "Confidence > 1.0"},
+  {"id": 50, "raw": "{\"ticket_id\": 150, \"category\": \"Marketing\", \"reasoning\": \"Sponsorship inquiry\"}", "expected_category": "Unknown category", "error": "Out of domain Marketing"}
+]
