@@ -7,20 +7,17 @@ import os
 import sys
 import pytest
 
-DAY12_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "archive", "Day12"))
+DAY12_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "Day12"))
 DATASET_PATH = os.path.join(DAY12_DIR, "labelled_dataset.json")
 EDGE_CASES_PATH = os.path.join(DAY12_DIR, "edge_cases.md")
 PROMPTS_DIR = os.path.join(DAY12_DIR, "prompts")
 OUTPUT_DIR = os.path.join(DAY12_DIR, "output")
 
-if DAY12_DIR not in sys.path:
-    sys.path.insert(0, DAY12_DIR)
-
-from run_fewshot_benchmark import run_benchmark
-from ordering_experiment import run_ordering_experiment
-from cost_analysis import run_cost_analysis
-from dynamic_selector import run_dynamic_selector_demo
-from revision_example import generate_reproducible_split
+from Day12.run_fewshot_benchmark import run_benchmark
+from Day12.ordering_experiment import run_ordering_experiment
+from Day12.cost_analysis import run_cost_analysis
+from Day12.dynamic_selector import run_dynamic_selector_demo
+from Day12.revision_example import generate_reproducible_split
 
 
 def test_dataset_structure_and_edge_cases():

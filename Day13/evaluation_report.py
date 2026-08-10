@@ -5,10 +5,10 @@ Aggregates metrics and generates Day13/reports/day13_evaluation_report.md.
 
 import os
 from typing import Dict, Any
-from failure_taxonomy import FailureTaxonomyAnalyzer
-from self_repair import run_retry_budget_analysis
-from unknown_schema_demo import run_unknown_comparison
-from constrained_vs_repair import run_constrained_vs_repair_experiment
+from .failure_taxonomy import FailureTaxonomyAnalyzer
+from .self_repair import run_retry_budget_analysis
+from .unknown_schema_demo import run_unknown_comparison
+from .constrained_vs_repair import run_constrained_vs_repair_experiment
 
 
 REPORTS_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "reports"))

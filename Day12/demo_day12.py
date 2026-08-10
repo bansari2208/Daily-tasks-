@@ -3,11 +3,11 @@ Day 12 Live Demo Script.
 """
 
 import os, json, sys, random
-from run_fewshot_benchmark import run_benchmark
-from ordering_experiment import run_ordering_experiment
-from cost_analysis import run_cost_analysis
-from dynamic_selector import run_dynamic_selector_demo
-from revision_example import generate_reproducible_split
+from .run_fewshot_benchmark import run_benchmark
+from .ordering_experiment import run_ordering_experiment
+from .cost_analysis import run_cost_analysis
+from .dynamic_selector import run_dynamic_selector_demo
+from .revision_example import generate_reproducible_split
 
 
 def main():

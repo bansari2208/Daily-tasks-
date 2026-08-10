@@ -4,7 +4,6 @@ import sys
 import os
 
 # Ensure package import works regardless of execution directory
-sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 
 # Ensure UTF-8 output encoding for cross-platform terminal compatibility
 if hasattr(sys.stdout, "reconfigure"):

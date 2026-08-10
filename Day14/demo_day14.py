@@ -14,7 +14,6 @@ import os
 import json
 
 # Ensure Day14 directory is in sys.path
-sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 
 from tool_executor import ToolExecutor
 from evaluation import run_evaluation_benchmark

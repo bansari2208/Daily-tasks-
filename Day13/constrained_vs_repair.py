@@ -7,9 +7,9 @@ import os
 import time
 import json
 from typing import Dict, Any
-from response_models import TicketClassificationResponse, CategoryEnum
-from validation_boundary import ValidationBoundary
-from self_repair import BoundedSelfRepairLoop
+from .response_models import TicketClassificationResponse, CategoryEnum
+from .validation_boundary import ValidationBoundary
+from .self_repair import BoundedSelfRepairLoop
 
 REPORTS_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "reports"))
 

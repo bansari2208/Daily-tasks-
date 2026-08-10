@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ticket-classifier"
+version = "0.1.0"
+description = "Resilient Async LLM Ticket Classification Package"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "httpx",
+    "pydantic",
+    "python-dotenv",
+    "langfuse",
+    "tiktoken",
+    "langchain-groq",
+    "langsmith",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["ticket_classifier*"]

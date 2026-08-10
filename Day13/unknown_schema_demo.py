@@ -6,8 +6,8 @@ Demonstrates reduction in hallucinations when allowing explicit UNKNOWN category
 import os
 import json
 from typing import Dict, Any, List, Tuple
-from response_models import TicketClassificationResponse, FlexibleTicketResponse
-from validation_boundary import ValidationBoundary
+from .response_models import TicketClassificationResponse, FlexibleTicketResponse
+from .validation_boundary import ValidationBoundary
 
 
 REPORTS_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "reports"))

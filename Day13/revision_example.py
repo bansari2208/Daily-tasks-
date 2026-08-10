@@ -4,8 +4,8 @@ Demonstrates try/except/else/finally control flow and taxonomy-aligned exception
 """
 
 from typing import Dict, Any, Tuple, Optional
-from response_models import TicketClassificationResponse
-from validation_boundary import ValidationBoundary, ValidationBoundaryError
+from .response_models import TicketClassificationResponse
+from .validation_boundary import ValidationBoundary, ValidationBoundaryError
 
 
 # ----------------------------------------------------

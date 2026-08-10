@@ -4,7 +4,6 @@ import sys
 import time
 
 # Ensure package import works regardless of execution directory
-sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 
 from ticket_classifier.client import AsyncLLMClient
 

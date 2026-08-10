@@ -8,17 +8,16 @@ import os
 import json
 
 # Ensure Day13 directory is in sys.path
-sys.path.insert(0, os.path.dirname(__file__))
 
-from response_models import TicketClassificationResponse, FlexibleTicketResponse
-from validation_boundary import ValidationBoundary
-from self_repair import BoundedSelfRepairLoop, run_retry_budget_analysis
-from failure_taxonomy import run_taxonomy_analysis
-from unknown_schema_demo import run_unknown_comparison
-from partial_results import PartialResultExtractor
-from constrained_vs_repair import run_constrained_vs_repair_experiment
-from revision_example import safe_ticket_extraction_pipeline, map_error_to_exception
-from evaluation_report import generate_day13_evaluation_report
+from .response_models import TicketClassificationResponse, FlexibleTicketResponse
+from .validation_boundary import ValidationBoundary
+from .self_repair import BoundedSelfRepairLoop, run_retry_budget_analysis
+from .failure_taxonomy import run_taxonomy_analysis
+from .unknown_schema_demo import run_unknown_comparison
+from .partial_results import PartialResultExtractor
+from .constrained_vs_repair import run_constrained_vs_repair_experiment
+from .revision_example import safe_ticket_extraction_pipeline, map_error_to_exception
+from .evaluation_report import generate_day13_evaluation_report
 
 
 def pause():

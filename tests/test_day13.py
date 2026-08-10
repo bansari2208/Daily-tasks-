@@ -8,20 +8,15 @@ import json
 import pytest
 
 DAY13_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "Day13"))
-sys.path = [p for p in sys.path if "Day12" not in p and p != DAY13_DIR]
-sys.path.insert(0, DAY13_DIR)
-for mod_name in ["revision_example", "self_repair", "cost_analysis", "ordering_experiment", "run_fewshot_benchmark", "dynamic_selector"]:
-    if mod_name in sys.modules:
-        del sys.modules[mod_name]
 
-from response_models import TicketClassificationResponse, FlexibleTicketResponse, FlexibleCategoryEnum
-from validation_boundary import ValidationBoundary, ValidationBoundaryError
-from self_repair import BoundedSelfRepairLoop, MaxRetriesExceededError, run_retry_budget_analysis
-from failure_taxonomy import FailureTaxonomyAnalyzer, run_taxonomy_analysis
-from unknown_schema_demo import run_unknown_comparison
-from partial_results import PartialResultExtractor
-from constrained_vs_repair import run_constrained_vs_repair_experiment
-from revision_example import (
+from Day13.response_models import TicketClassificationResponse, FlexibleTicketResponse, FlexibleCategoryEnum
+from Day13.validation_boundary import ValidationBoundary, ValidationBoundaryError
+from Day13.self_repair import BoundedSelfRepairLoop, MaxRetriesExceededError, run_retry_budget_analysis
+from Day13.failure_taxonomy import FailureTaxonomyAnalyzer, run_taxonomy_analysis
+from Day13.unknown_schema_demo import run_unknown_comparison
+from Day13.partial_results import PartialResultExtractor
+from Day13.constrained_vs_repair import run_constrained_vs_repair_experiment
+from Day13.revision_example import (
     TicketClassifierError,
     ValidationErrorBoundaryError,
     MissingRequiredFieldError,
@@ -30,7 +25,7 @@ from revision_example import (
     safe_ticket_extraction_pipeline,
     map_error_to_exception
 )
-from evaluation_report import generate_day13_evaluation_report
+from Day13.evaluation_report import generate_day13_evaluation_report
 
 
 def test_response_validation():

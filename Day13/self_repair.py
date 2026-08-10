@@ -7,9 +7,9 @@ import time
 import json
 from typing import Dict, Any, Type, Tuple, Callable
 from pydantic import BaseModel
-from response_models import TicketClassificationResponse
-from validation_boundary import ValidationBoundary, ValidationBoundaryError
-from logger import StructuredValidationLogger
+from .response_models import TicketClassificationResponse
+from .validation_boundary import ValidationBoundary, ValidationBoundaryError
+from .logger import StructuredValidationLogger
 
 
 class MaxRetriesExceededError(Exception):

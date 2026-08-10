@@ -6,7 +6,7 @@ Extracts valid fields and isolates invalid fields when whole-model validation fa
 import json
 from typing import Dict, Any, Type, Tuple
 from pydantic import BaseModel, ValidationError
-from response_models import TicketClassificationResponse, CategoryEnum, PriorityEnum
+from .response_models import TicketClassificationResponse, CategoryEnum, PriorityEnum
 
 
 class PartialResultExtractor:

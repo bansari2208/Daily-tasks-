@@ -10,7 +10,6 @@ import os
 import unittest
 
 # Ensure Day14 folder is in sys.path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from tool_executor import ToolExecutor
 from evaluation import run_evaluation_benchmark
