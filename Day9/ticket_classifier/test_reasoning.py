@@ -1,12 +1,12 @@
 import unittest
 import asyncio
-from ticket_classifier.reasoning import (
+from .reasoning import (
     analyze_ticket_complexity,
     should_use_reasoning_model,
     estimate_reasoning_tokens,
 )
-from ticket_classifier.config import STANDARD_MODEL, REASONING_MODEL
-from ticket_classifier.client import AsyncLLMClient
+from .config import STANDARD_MODEL, REASONING_MODEL
+from .client import AsyncLLMClient
 
 
 class TestReasoningModule(unittest.TestCase):

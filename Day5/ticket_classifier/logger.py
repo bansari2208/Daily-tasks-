@@ -2,7 +2,7 @@ import os
 import json
 import uuid
 from datetime import datetime, timezone
-from ticket_classifier.redaction import redact_text
+from .redaction import redact_text
 
 LOG_FILE_PATH = os.path.join("logs", "llm_logs.jsonl")
 

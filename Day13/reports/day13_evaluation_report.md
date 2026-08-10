@@ -10,9 +10,9 @@ Day 13 establishes application boundary validation, self-repair loops, hallucina
 | Retry Budget | Validity (%) | Avg Retries | Avg Latency (ms) | Cost / 1k Reqs |
 | --- | --- | --- | --- | --- |
 | Budget = 1 | 0.0% | 1.0 | 40.0 ms | $0.5 |
-| Budget = 2 | 100.0% | 1.0 | 40.7 ms | $0.608 |
-| Budget = 3 | 100.0% | 1.0 | 40.6 ms | $0.608 |
-| Budget = 4 | 100.0% | 1.0 | 40.6 ms | $0.608 |
+| Budget = 2 | 100.0% | 1.0 | 40.4 ms | $0.608 |
+| Budget = 3 | 100.0% | 1.0 | 40.3 ms | $0.608 |
+| Budget = 4 | 100.0% | 1.0 | 40.3 ms | $0.608 |
 
 **Optimal Retry Budget Selection**: **3 Retries** achieves 95%+ recovery with minimal latency overhead.
 

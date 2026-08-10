@@ -1,5 +1,5 @@
 import unittest
-from ticket_classifier.cost import (
+from .cost import (
     calculate_request_cost,
     compress_prompt,
     compare_language_inflation,

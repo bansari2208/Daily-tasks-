@@ -8,10 +8,10 @@ import time
 # Ensure package import works regardless of execution directory
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from ticket_classifier.client import AsyncLLMClient
-from ticket_classifier.report import generate_report
-from ticket_classifier.tracer import get_tracing_status, flush_langfuse_traces
-from ticket_classifier.utils import timer
+from .client import AsyncLLMClient
+from .report import generate_report
+from .tracer import get_tracing_status, flush_langfuse_traces
+from .utils import timer
 
 
 def generate_sample_tickets(count: int = 100) -> list[str]:

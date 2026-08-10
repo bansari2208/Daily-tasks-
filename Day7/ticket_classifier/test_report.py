@@ -8,8 +8,8 @@ from unittest.mock import patch
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from ticket_classifier.logger import log_llm_call
-from ticket_classifier.report import generate_report
+from .logger import log_llm_call
+from .report import generate_report
 
 
 class TestReport(unittest.TestCase):

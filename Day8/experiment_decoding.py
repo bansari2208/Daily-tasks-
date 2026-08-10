@@ -6,12 +6,7 @@ import os
 # Ensure package import works regardless of execution directory
 sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 
-# Ensure UTF-8 output encoding for cross-platform terminal compatibility
-if hasattr(sys.stdout, "reconfigure"):
-    try:
-        sys.stdout.reconfigure(encoding="utf-8")
-    except Exception:
-        pass
+
 
 
 def run_temperature_topp_sweep():
@@ -161,15 +156,15 @@ def run_stretch_goal_example():
 
     print(f"Ticket: \"{complex_ticket}\"\n")
 
-    print("Approach A — Direct Single-Call JSON Extraction:")
+    print("Approach A - Direct Single-Call JSON Extraction:")
     print("  Output: {\"category\": \"Billing\", \"priority\": \"MEDIUM\", \"reason\": \"Double charge issue\"}")
     print("  Issue: Missed the critical 404 technical invoice blocker for accounting.\n")
 
-    print("Approach B — Two-Call Workflow:")
+    print("Approach B - Two-Call Workflow:")
     print("  Call 1 (Free-form Reasoning):")
     print("    '1. User experienced duplicate subscription charge ($49 x 2).'")
     print("    '2. User also facing HTTP 404 error downloading tax invoice PDF.'")
-    print("    '3. Impact: High — finance reconciliation blocked. Needs urgent billing refund + tech fix.'")
+    print("    '3. Impact: High - finance reconciliation blocked. Needs urgent billing refund + tech fix.'")
     print("  Call 2 (Structured JSON Conversion):")
     print("    Output: {")
     print("      \"category\": \"Billing\",")
@@ -194,11 +189,11 @@ def main():
     run_stretch_goal_example()
 
     print("\nVerification Checklist:")
-    print("  ✔ Temperature vs Top-p comparison")
-    print("  ✔ Confidence threshold analysis")
-    print("  ✔ Output control comparison")
-    print("  ✔ Recommended decoding configuration")
-    print("  ✔ Stretch goal example")
+    print("  [x] Temperature vs Top-p comparison")
+    print("  [x] Confidence threshold analysis")
+    print("  [x] Output control comparison")
+    print("  [x] Recommended decoding configuration")
+    print("  [x] Stretch goal example")
     print("\nDay 8 Experiments Completed Successfully!\n")
 
 

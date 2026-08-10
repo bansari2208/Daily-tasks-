@@ -3,14 +3,14 @@ import json
 import tempfile
 import unittest
 import asyncio
-from ticket_classifier.config import (
+from .config import (
     TEMPERATURE,
     TOP_P,
     CONFIDENCE_THRESHOLD,
     SCHEMA_VALIDATION,
 )
-from ticket_classifier.client import AsyncLLMClient, validate_response_schema
-from ticket_classifier.logger import save_to_review_queue
+from .client import AsyncLLMClient, validate_response_schema
+from .logger import save_to_review_queue
 
 
 class TestDecodingModule(unittest.TestCase):

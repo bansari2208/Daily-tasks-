@@ -4,12 +4,12 @@ import random
 import time
 from datetime import datetime, timezone
 import httpx
-from ticket_classifier.circuit_breaker import CircuitBreaker
-from ticket_classifier.providers import MockPrimaryProvider, MockFallbackProvider
-from ticket_classifier.logger import log_llm_call, save_to_review_queue
-from ticket_classifier.cost import calculate_request_cost
-from ticket_classifier.tracer import trace_llm_call, trace_langfuse_call
-from ticket_classifier.config import (
+from .circuit_breaker import CircuitBreaker
+from .providers import MockPrimaryProvider, MockFallbackProvider
+from .logger import log_llm_call, save_to_review_queue
+from .cost import calculate_request_cost
+from .tracer import trace_llm_call, trace_langfuse_call
+from .config import (
     TEMPERATURE,
     TOP_P,
     CONFIDENCE_THRESHOLD,
@@ -17,12 +17,12 @@ from ticket_classifier.config import (
     STANDARD_MODEL,
     REASONING_MODEL,
 )
-from ticket_classifier.reasoning import (
+from .reasoning import (
     analyze_ticket_complexity,
     should_use_reasoning_model,
     estimate_reasoning_tokens,
 )
-from ticket_classifier.playbook import (
+from .playbook import (
     detect_task_type,
     get_recommended_model,
     get_model_reason,

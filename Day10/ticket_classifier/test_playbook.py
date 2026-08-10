@@ -1,6 +1,6 @@
 import unittest
 import asyncio
-from ticket_classifier.playbook import (
+from .playbook import (
     detect_task_type,
     get_recommended_model,
     get_model_reason,
@@ -10,7 +10,7 @@ from ticket_classifier.playbook import (
     get_playbook_version,
     get_playbook_last_updated,
 )
-from ticket_classifier.client import AsyncLLMClient
+from .client import AsyncLLMClient
 
 
 class TestPlaybookModule(unittest.TestCase):

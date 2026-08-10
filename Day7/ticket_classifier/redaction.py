@@ -7,6 +7,8 @@ PII_PATTERNS = [
     # Phone numbers (e.g. +1-555-123-4567, (555) 123-4567, 555-987-6543)
     r"\b(?:\+\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}\b",
     # Credit card numbers (13 to 19 digits with optional spaces or hyphens)
+    # Note: Raw string prefix 'r' is mandatory. Without 'r', '\b' is parsed as ASCII Backspace (\x08),
+    # which breaks regex word boundary matching and causes credit card detection to fail.
     r"\b(?:\d[ -]*?){13,19}\b",
     # API keys / Bearer tokens (e.g. api_key=sk_live_123456789, token: xyz123)
     r"(?i)\b(api[_\s]?key|bearer|token)\s*[:=]\s*\S+",

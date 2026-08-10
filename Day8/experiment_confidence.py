@@ -9,13 +9,6 @@ import logging
 from dataclasses import dataclass
 from pathlib import Path
 
-# Ensure UTF-8 output encoding for cross-platform terminal compatibility
-if hasattr(sys.stdout, "reconfigure"):
-    try:
-        sys.stdout.reconfigure(encoding="utf-8")
-    except Exception:
-        pass
-
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
 

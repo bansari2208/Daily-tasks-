@@ -5,7 +5,7 @@ from unittest.mock import patch
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from ticket_classifier.tracer import trace_llm_call
+from .tracer import trace_llm_call
 
 
 class TestTracer(unittest.TestCase):

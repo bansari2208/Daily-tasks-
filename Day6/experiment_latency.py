@@ -10,13 +10,6 @@ import logging
 from dataclasses import dataclass
 from pathlib import Path
 
-# Ensure UTF-8 output encoding for cross-platform terminal compatibility
-if hasattr(sys.stdout, "reconfigure"):
-    try:
-        sys.stdout.reconfigure(encoding="utf-8")
-    except Exception:
-        pass
-
 # Configure simple logging
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
@@ -96,9 +89,9 @@ def run_latency_experiment():
 
     # Explanation block
     print("\nLatency Insights & Explanation:")
-    print("  • Small prompt (~200 tokens): Decode dominates because prompt prefill takes very little time (~0.06s).")
-    print("  • Large prompt (~20,000 tokens): Prefill dominates because computing self-attention over 20,000 input tokens takes ~2.04s.")
-    print("  • Streaming delivers Token 1 at TTFT, improving user-perceived speed significantly.\n")
+    print("  - Small prompt (~200 tokens): Decode dominates because prompt prefill takes very little time (~0.06s).")
+    print("  - Large prompt (~20,000 tokens): Prefill dominates because computing self-attention over 20,000 input tokens takes ~2.04s.")
+    print("  - Streaming delivers Token 1 at TTFT, improving user-perceived speed significantly.\n")
 
 
 if __name__ == "__main__":

@@ -1,4 +1,5 @@
-from ticket_classifier.models import PriorityResult
+import re
+from .models import PriorityResult
 
 HIGH_KEYWORDS = {"failed", "charge", "crash", "down", "breach", "api_key", "twice", "error 500"}
 MEDIUM_KEYWORDS = {"update", "cannot", "slow", "issue", "reset", "help"}
@@ -14,7 +15,7 @@ def predict_priority(ticket_text: str, category: str = "General") -> PriorityRes
     text_lower = ticket_text.lower()
 
     # Check for HIGH priority keywords or critical billing signals
-    if any(kw in text_lower for kw in HIGH_KEYWORDS):
+    if any(re.search(r"\b" + re.escape(kw) + r"\b", text_lower) for kw in HIGH_KEYWORDS):
         return PriorityResult(
             priority="HIGH",
             score=0.90,
@@ -29,7 +30,7 @@ def predict_priority(ticket_text: str, category: str = "General") -> PriorityRes
         )
 
     # Check for MEDIUM priority keywords
-    if any(kw in text_lower for kw in MEDIUM_KEYWORDS):
+    if any(re.search(r"\b" + re.escape(kw) + r"\b", text_lower) for kw in MEDIUM_KEYWORDS):
         return PriorityResult(
             priority="MEDIUM",
             score=0.60,

@@ -2,10 +2,10 @@ import asyncio
 import random
 import time
 import httpx
-from ticket_classifier.circuit_breaker import CircuitBreaker
-from ticket_classifier.providers import MockPrimaryProvider, MockFallbackProvider
-from ticket_classifier.logger import log_llm_call
-from ticket_classifier.tracer import trace_llm_call, trace_langfuse_call
+from .circuit_breaker import CircuitBreaker
+from .providers import MockPrimaryProvider, MockFallbackProvider
+from .logger import log_llm_call
+from .tracer import trace_llm_call, trace_langfuse_call
 
 
 class AsyncLLMClient:

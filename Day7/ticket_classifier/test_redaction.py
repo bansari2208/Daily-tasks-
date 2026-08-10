@@ -6,8 +6,8 @@ import sys
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from ticket_classifier.redaction import redact_text
-from ticket_classifier.logger import log_llm_call
+from .redaction import redact_text
+from .logger import log_llm_call
 
 
 class TestRedaction(unittest.TestCase):

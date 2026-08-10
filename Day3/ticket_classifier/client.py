@@ -1,8 +1,8 @@
 import asyncio
 import random
 import httpx
-from ticket_classifier.circuit_breaker import CircuitBreaker
-from ticket_classifier.providers import MockPrimaryProvider, MockFallbackProvider
+from .circuit_breaker import CircuitBreaker
+from .providers import MockPrimaryProvider, MockFallbackProvider
 
 
 class AsyncLLMClient:

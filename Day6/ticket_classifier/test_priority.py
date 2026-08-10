@@ -4,8 +4,8 @@ import os
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from ticket_classifier.priority import predict_priority
-from ticket_classifier.models import PriorityResult
+from .priority import predict_priority
+from .models import PriorityResult
 
 
 class TestPriority(unittest.TestCase):
@@ -25,6 +25,15 @@ class TestPriority(unittest.TestCase):
 
     def test_low_priority(self):
         res = predict_priority("Dark mode feature request")
+        self.assertEqual(res.priority, "LOW")
+
+    def test_server_is_down_is_high(self):
+        res = predict_priority("Server is down")
+        self.assertEqual(res.priority, "HIGH")
+
+    def test_download_is_not_high(self):
+        res = predict_priority("Where can I download my invoice?")
+        self.assertNotEqual(res.priority, "HIGH")
         self.assertEqual(res.priority, "LOW")
 
     def test_empty_ticket_text_raises_error(self):

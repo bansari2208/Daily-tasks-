@@ -1,7 +1,7 @@
 import os
 import json
 import statistics
-from ticket_classifier.cost import (
+from .cost import (
     calculate_request_cost,
     compress_prompt,
     compare_language_inflation,
@@ -176,16 +176,16 @@ def generate_report(log_file: str = LOG_FILE_PATH, batch_time: float = None):
     print(f"Most Expensive Tier Option: GPT-4.1 (${est_monthly_cost * 10.0:.2f} / month)")
     print()
     print("Prompt Compression Savings:")
-    print(f"  Original Tokens:         {compression_stats['original_tokens']}")
-    print(f"  Compressed Tokens:       {compression_stats['compressed_tokens']}")
-    print(f"  Tokens Saved:            {compression_stats['tokens_saved']} ({compression_stats['savings_pct']}%)")
-    print(f"  Estimated Monthly Saved: ${compression_stats['monthly_savings']:.2f}")
+    print(f"  Original Tokens:         {compression_stats.get('original_tokens', 0)}")
+    print(f"  Compressed Tokens:       {compression_stats.get('compressed_tokens', 0)}")
+    print(f"  Tokens Saved:            {compression_stats.get('tokens_saved', 0)} ({compression_stats.get('savings_pct', 0.0)}%)")
+    print(f"  Estimated Monthly Saved: ${compression_stats.get('monthly_savings', 0.0):.2f}")
     print()
     print("Language Token Inflation:")
-    print(f"  English Tokens:          {inflation_stats['english_tokens']}")
-    print(f"  Hindi/Gujarati Tokens:   {inflation_stats['non_english_tokens']}")
-    print(f"  Token Difference:        +{inflation_stats['token_difference']} tokens")
-    print(f"  Inflation Percentage:    +{inflation_stats['inflation_pct']}%")
+    print(f"  English Tokens:          {inflation_stats.get('english_tokens', 0)}")
+    print(f"  Hindi/Gujarati Tokens:   {inflation_stats.get('non_english_tokens', 0)}")
+    print(f"  Token Difference:        +{inflation_stats.get('token_difference', 0)} tokens")
+    print(f"  Inflation Percentage:    +{inflation_stats.get('inflation_pct', 0.0)}%")
     print()
     # Print Day 8 Decoding Quality Report & Human Review Queue
     confidences = [log.get("confidence_score", 0.95) for log in logs if log.get("confidence_score") is not None]

@@ -6,7 +6,7 @@ import sys
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from ticket_classifier.logger import log_llm_call
+from .logger import log_llm_call
 
 
 class TestLogger(unittest.TestCase):

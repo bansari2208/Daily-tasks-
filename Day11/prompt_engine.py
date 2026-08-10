@@ -17,6 +17,21 @@ def load_prompt(prompt_name: str = "production_prompt.jinja2") -> str:
     with open(prompt_path, "r", encoding="utf-8") as f:
         return f.read()
 
+def load_langfuse_prompt(prompt_name: str = "ticket_classifier 1", label: str = "production", ticket_text: str = "") -> str:
+    """
+    Day 15 Integration: Fetches production prompt from Langfuse Prompt Management Registry
+    and compiles using template variable {{ticket}}.
+    """
+    try:
+        from Day15.langfuse_integration import LangfusePromptManager
+        manager = LangfusePromptManager()
+        prompt_obj = manager.get_prompt_by_label(prompt_name, label=label)
+        return manager.compile_prompt(prompt_obj, ticket_text)
+    except Exception:
+        # Fallback to local prompt rendering if Langfuse is unreachable
+        return render_production_prompt(ticket_text)
+
+
 class TicketClassificationSchema(BaseModel):
     """
     Day 11 Schema-First Design Single Source of Truth (Task 42).

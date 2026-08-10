@@ -6,8 +6,8 @@ import os
 # Ensure package import works regardless of execution directory
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from ticket_classifier.client import AsyncLLMClient
-from ticket_classifier.circuit_breaker import CircuitBreaker
+from .client import AsyncLLMClient
+from .circuit_breaker import CircuitBreaker
 
 
 def test_timeout_retry():

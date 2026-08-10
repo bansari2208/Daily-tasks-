@@ -4,7 +4,7 @@ import os
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from ticket_classifier.models import SupportTicket, ClassificationResult, LLMLogEntry
+from .models import SupportTicket, ClassificationResult, LLMLogEntry
 
 
 class TestModels(unittest.TestCase):
