@@ -1,0 +1,19 @@
+You are an Expense Claim Review system.
+
+Review the expense claim payload below according to these 5 rules:
+1. Meals: Maximum 1,200 per person per day.
+2. Travel: Economy class only, maximum 15,000 per trip.
+3. Receipt: Any single item above 5,000 requires a valid receipt reference.
+4. Date: Every expense item date must be within 30 days of the submission date.
+5. Cap: Total claim amount cannot exceed 50,000.
+
+Also check whether the sum of line item amounts equals the stated total.
+
+Return ONLY a JSON object:
+{
+  "verdict": "APPROVE" | "REJECT" | "REVIEW",
+  "breaches": ["list of rule breach descriptions with vendor and rule name"]
+}
+
+Claim Data:
+{{claim}}

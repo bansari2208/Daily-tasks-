@@ -1,0 +1,15 @@
+Decide final verdict and consolidate rule breaches from previous checks.
+
+Arithmetic Check: {{arithmetic_result}}
+Rule Check: {{rule_check_result}}
+
+Rules:
+- APPROVE: Arithmetic correct, no breaches.
+- REJECT: Hard breaches (e.g., non-economy travel, mixed currency, >30 days old expense, claim cap >50,000 exceeded).
+- REVIEW: Minor breaches or arithmetic discrepancies needing manual check.
+
+Return ONLY a JSON object:
+{
+  "verdict": "APPROVE" | "REJECT" | "REVIEW",
+  "breaches": ["consolidated list of breaches"]
+}

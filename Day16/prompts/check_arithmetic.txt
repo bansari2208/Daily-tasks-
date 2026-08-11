@@ -1,0 +1,12 @@
+Check whether the line item amounts sum to the stated claim total.
+
+Stated Total: {{stated_total}}
+Line Items: {{line_items}}
+
+Return ONLY a JSON object:
+{
+  "calculated_total": float,
+  "stated_total": float,
+  "is_correct": boolean,
+  "difference": float
+}

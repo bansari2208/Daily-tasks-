@@ -1,0 +1,20 @@
+Extract structured information from the expense claim.
+
+Return ONLY a JSON object:
+{
+  "submission_date": "YYYY-MM-DD",
+  "claimant": "Name",
+  "stated_total": float,
+  "line_items": [
+    {
+      "date": "YYYY-MM-DD",
+      "category": "Meals|Travel|Equipment|Services|Other",
+      "vendor": "Vendor Name",
+      "amount": float,
+      "receipt_ref": "REC-XXX" or null
+    }
+  ]
+}
+
+Claim Data:
+{{claim}}

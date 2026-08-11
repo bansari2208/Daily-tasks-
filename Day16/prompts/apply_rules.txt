@@ -1,0 +1,17 @@
+Evaluate expense claim against corporate policy rules:
+1. Meals: Max 1,200 per person/day.
+2. Travel: Economy class only, max 15,000 per trip.
+3. Receipt: Items > 5,000 require receipt reference.
+4. Date: Expense date within 30 days of submission date.
+5. Cap: Total claim capped at 50,000.
+Check currency consistency as well.
+
+Submission Date: {{submission_date}}
+Stated Total: {{stated_total}}
+Line Items: {{line_items}}
+
+Return ONLY a JSON object:
+{
+  "has_breaches": boolean,
+  "breaches": ["list of rule breach descriptions"]
+}
