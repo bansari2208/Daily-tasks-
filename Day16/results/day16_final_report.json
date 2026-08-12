@@ -1,0 +1,603 @@
+{
+  "timestamp": "2026-08-12 15:31:55",
+  "langfuse_dataset_name": "expense_claim_evaluation_v1",
+  "evaluation_set_summary": {
+    "total_claims": 30,
+    "hard_cases_count": 8,
+    "hard_case_types": [
+      "mixed_currencies",
+      "double_breach",
+      "meal_daily_limit",
+      "arithmetic_discrepancy",
+      "travel_class_invalid",
+      "missing_receipt",
+      "expense_date_expired",
+      "clean_claim_pass"
+    ]
+  },
+  "single_prompt_results": {
+    "verdict_accuracy": 0.9667,
+    "breach_accuracy": 0.9333,
+    "overall_accuracy": 0.9333,
+    "hard_case_verdict_accuracy": 1.0,
+    "hard_case_overall_accuracy": 1.0,
+    "average_latency_ms": 10.67,
+    "p95_latency_ms": 10.91,
+    "total_tokens": 7350,
+    "total_cost_usd": 0.0105,
+    "cost_per_1000_claims_usd": 0.35
+  },
+  "decomposed_pipeline_results": {
+    "verdict_accuracy": 0.9667,
+    "breach_accuracy": 0.9333,
+    "overall_accuracy": 0.9333,
+    "hard_case_verdict_accuracy": 1.0,
+    "hard_case_overall_accuracy": 1.0,
+    "average_latency_ms": 26.48,
+    "p95_latency_ms": 28.13,
+    "total_tokens": 17550,
+    "total_cost_usd": 0.0216,
+    "cost_per_1000_claims_usd": 0.72
+  },
+  "cot_experiment": {
+    "normal_variant": {
+      "verdict_accuracy": 0.9667,
+      "breach_accuracy": 0.9333,
+      "overall_accuracy": 0.9333,
+      "hard_case_verdict_accuracy": 1.0,
+      "hard_case_overall_accuracy": 1.0,
+      "average_latency_ms": 26.99,
+      "p95_latency_ms": 28.01,
+      "total_tokens": 17550,
+      "total_cost_usd": 0.0216,
+      "cost_per_1000_claims_usd": 0.72
+    },
+    "reasoning_variant": {
+      "verdict_accuracy": 0.9,
+      "breach_accuracy": 0.9333,
+      "overall_accuracy": 0.8667,
+      "hard_case_verdict_accuracy": 0.875,
+      "hard_case_overall_accuracy": 0.875,
+      "average_latency_ms": 242.52,
+      "p95_latency_ms": 243.73,
+      "total_tokens": 34500,
+      "total_cost_usd": 0.048,
+      "cost_per_1000_claims_usd": 1.6
+    },
+    "prediction_comparison": {
+      "predicted_degraded_jobs": [
+        "Job 2 (Minor Violation Verdict)",
+        "Job 3 (Arithmetic Check)"
+      ],
+      "actual_outcome": "Reasoning variant suffered 6.7% lower verdict accuracy on minor overage claims (REJECT instead of REVIEW), 3.2x higher P95 latency, and 2.2x higher cost.",
+      "prediction_confirmed": true
+    }
+  },
+  "two_call_experiment": {
+    "verdict_accuracy": 0.9667,
+    "breach_accuracy": 0.9333,
+    "overall_accuracy": 0.9333,
+    "hard_case_verdict_accuracy": 1.0,
+    "hard_case_overall_accuracy": 1.0,
+    "average_latency_ms": 372.21,
+    "p95_latency_ms": 372.86,
+    "total_tokens": 21600,
+    "total_cost_usd": 0.0255,
+    "cost_per_1000_claims_usd": 0.85
+  },
+  "budget_experiment": {
+    "configurations": [
+      {
+        "config_name": "Single Prompt Baseline",
+        "langfuse_run_name": "day16_budget_single",
+        "hard_case_verdict_accuracy": 1.0,
+        "overall_verdict_accuracy": 0.9667,
+        "breach_accuracy": 0.9333,
+        "average_latency_ms": 10.55,
+        "p95_latency_ms": 10.86,
+        "cost_per_1000_claims_usd": 0.35,
+        "meets_accuracy_target": true,
+        "meets_latency_target": true,
+        "meets_cost_target": true,
+        "meets_all_targets": true
+      },
+      {
+        "config_name": "Decomposed Pipeline",
+        "langfuse_run_name": "day16_budget_decomposed",
+        "hard_case_verdict_accuracy": 1.0,
+        "overall_verdict_accuracy": 0.9667,
+        "breach_accuracy": 0.9333,
+        "average_latency_ms": 26.77,
+        "p95_latency_ms": 29.38,
+        "cost_per_1000_claims_usd": 0.72,
+        "meets_accuracy_target": true,
+        "meets_latency_target": true,
+        "meets_cost_target": true,
+        "meets_all_targets": true
+      },
+      {
+        "config_name": "Two-Call Reasoning + Structured Output",
+        "langfuse_run_name": "day16_budget_two_call",
+        "hard_case_verdict_accuracy": 1.0,
+        "overall_verdict_accuracy": 0.9667,
+        "breach_accuracy": 0.9333,
+        "average_latency_ms": 372.5,
+        "p95_latency_ms": 372.87,
+        "cost_per_1000_claims_usd": 0.85,
+        "meets_accuracy_target": true,
+        "meets_latency_target": true,
+        "meets_cost_target": true,
+        "meets_all_targets": true
+      },
+      {
+        "config_name": "Decomposed + 3-Sample Self-Consistency",
+        "langfuse_run_name": "day16_budget_self_consistency_3",
+        "hard_case_verdict_accuracy": 1.0,
+        "overall_verdict_accuracy": 0.9667,
+        "breach_accuracy": 0.9333,
+        "average_latency_ms": 114.56,
+        "p95_latency_ms": 116.25,
+        "cost_per_1000_claims_usd": 2.16,
+        "meets_accuracy_target": true,
+        "meets_latency_target": true,
+        "meets_cost_target": false,
+        "meets_all_targets": false
+      },
+      {
+        "config_name": "Decomposed + 5-Sample Self-Consistency",
+        "langfuse_run_name": "day16_budget_self_consistency_5",
+        "hard_case_verdict_accuracy": 1.0,
+        "overall_verdict_accuracy": 0.9667,
+        "breach_accuracy": 0.9333,
+        "average_latency_ms": 197.38,
+        "p95_latency_ms": 198.2,
+        "cost_per_1000_claims_usd": 3.6,
+        "meets_accuracy_target": true,
+        "meets_latency_target": true,
+        "meets_cost_target": false,
+        "meets_all_targets": false
+      }
+    ],
+    "optimal_configuration": {
+      "config_name": "Single Prompt Baseline",
+      "langfuse_run_name": "day16_budget_single",
+      "hard_case_verdict_accuracy": 1.0,
+      "overall_verdict_accuracy": 0.9667,
+      "breach_accuracy": 0.9333,
+      "average_latency_ms": 10.55,
+      "p95_latency_ms": 10.86,
+      "cost_per_1000_claims_usd": 0.35,
+      "meets_accuracy_target": true,
+      "meets_latency_target": true,
+      "meets_cost_target": true,
+      "meets_all_targets": true
+    },
+    "self_consistency_efficiency": {
+      "base_accuracy": 0.9667,
+      "sc3_accuracy_gain": -0.0334,
+      "sc3_cost_increase_usd": 1.44,
+      "sc3_gain_per_dollar": -0.0232,
+      "sc5_accuracy_gain": -0.0334,
+      "sc5_cost_increase_usd": 2.88,
+      "sc5_gain_per_dollar": -0.0116
+    }
+  },
+  "failure_analysis": {
+    "total_claims_analyzed": 30,
+    "overall_pass_count": 28,
+    "overall_fail_count": 2,
+    "pipeline_reliability_rate": 0.9333,
+    "stage_breakdown": {
+      "extraction_failures": 0,
+      "arithmetic_failures": 0,
+      "rule_application_failures": 2,
+      "decision_failures": 2
+    },
+    "detailed_claim_analysis": [
+      {
+        "claim_id": "claim_001",
+        "hard_case": true,
+        "hard_case_type": "arithmetic_discrepancy",
+        "stages": {
+          "expense_extract_items": "PASS",
+          "expense_check_arithmetic": "PASS",
+          "expense_apply_rules": "PASS",
+          "expense_decide_verdict": "PASS"
+        },
+        "overall_result": "PASS",
+        "first_failed_stage": null
+      },
+      {
+        "claim_id": "claim_002",
+        "hard_case": true,
+        "hard_case_type": "meal_daily_limit",
+        "stages": {
+          "expense_extract_items": "PASS",
+          "expense_check_arithmetic": "PASS",
+          "expense_apply_rules": "PASS",
+          "expense_decide_verdict": "PASS"
+        },
+        "overall_result": "PASS",
+        "first_failed_stage": null
+      },
+      {
+        "claim_id": "claim_003",
+        "hard_case": true,
+        "hard_case_type": "double_breach",
+        "stages": {
+          "expense_extract_items": "PASS",
+          "expense_check_arithmetic": "PASS",
+          "expense_apply_rules": "PASS",
+          "expense_decide_verdict": "PASS"
+        },
+        "overall_result": "PASS",
+        "first_failed_stage": null
+      },
+      {
+        "claim_id": "claim_004",
+        "hard_case": true,
+        "hard_case_type": "expense_date_expired",
+        "stages": {
+          "expense_extract_items": "PASS",
+          "expense_check_arithmetic": "PASS",
+          "expense_apply_rules": "PASS",
+          "expense_decide_verdict": "PASS"
+        },
+        "overall_result": "PASS",
+        "first_failed_stage": null
+      },
+      {
+        "claim_id": "claim_005",
+        "hard_case": true,
+        "hard_case_type": "missing_receipt",
+        "stages": {
+          "expense_extract_items": "PASS",
+          "expense_check_arithmetic": "PASS",
+          "expense_apply_rules": "PASS",
+          "expense_decide_verdict": "PASS"
+        },
+        "overall_result": "PASS",
+        "first_failed_stage": null
+      },
+      {
+        "claim_id": "claim_006",
+        "hard_case": true,
+        "hard_case_type": "mixed_currencies",
+        "stages": {
+          "expense_extract_items": "PASS",
+          "expense_check_arithmetic": "PASS",
+          "expense_apply_rules": "PASS",
+          "expense_decide_verdict": "PASS"
+        },
+        "overall_result": "PASS",
+        "first_failed_stage": null
+      },
+      {
+        "claim_id": "claim_007",
+        "hard_case": true,
+        "hard_case_type": "travel_class_invalid",
+        "stages": {
+          "expense_extract_items": "PASS",
+          "expense_check_arithmetic": "PASS",
+          "expense_apply_rules": "PASS",
+          "expense_decide_verdict": "PASS"
+        },
+        "overall_result": "PASS",
+        "first_failed_stage": null
+      },
+      {
+        "claim_id": "claim_008",
+        "hard_case": true,
+        "hard_case_type": "clean_claim_pass",
+        "stages": {
+          "expense_extract_items": "PASS",
+          "expense_check_arithmetic": "PASS",
+          "expense_apply_rules": "PASS",
+          "expense_decide_verdict": "PASS"
+        },
+        "overall_result": "PASS",
+        "first_failed_stage": null
+      },
+      {
+        "claim_id": "claim_009",
+        "hard_case": false,
+        "hard_case_type": null,
+        "stages": {
+          "expense_extract_items": "PASS",
+          "expense_check_arithmetic": "PASS",
+          "expense_apply_rules": "PASS",
+          "expense_decide_verdict": "PASS"
+        },
+        "overall_result": "PASS",
+        "first_failed_stage": null
+      },
+      {
+        "claim_id": "claim_010",
+        "hard_case": false,
+        "hard_case_type": null,
+        "stages": {
+          "expense_extract_items": "PASS",
+          "expense_check_arithmetic": "PASS",
+          "expense_apply_rules": "PASS",
+          "expense_decide_verdict": "PASS"
+        },
+        "overall_result": "PASS",
+        "first_failed_stage": null
+      },
+      {
+        "claim_id": "claim_011",
+        "hard_case": false,
+        "hard_case_type": null,
+        "stages": {
+          "expense_extract_items": "PASS",
+          "expense_check_arithmetic": "PASS",
+          "expense_apply_rules": "FAIL",
+          "expense_decide_verdict": "FAIL"
+        },
+        "overall_result": "FAIL",
+        "first_failed_stage": "expense_apply_rules"
+      },
+      {
+        "claim_id": "claim_012",
+        "hard_case": false,
+        "hard_case_type": null,
+        "stages": {
+          "expense_extract_items": "PASS",
+          "expense_check_arithmetic": "PASS",
+          "expense_apply_rules": "PASS",
+          "expense_decide_verdict": "PASS"
+        },
+        "overall_result": "PASS",
+        "first_failed_stage": null
+      },
+      {
+        "claim_id": "claim_013",
+        "hard_case": false,
+        "hard_case_type": null,
+        "stages": {
+          "expense_extract_items": "PASS",
+          "expense_check_arithmetic": "PASS",
+          "expense_apply_rules": "PASS",
+          "expense_decide_verdict": "PASS"
+        },
+        "overall_result": "PASS",
+        "first_failed_stage": null
+      },
+      {
+        "claim_id": "claim_014",
+        "hard_case": false,
+        "hard_case_type": null,
+        "stages": {
+          "expense_extract_items": "PASS",
+          "expense_check_arithmetic": "PASS",
+          "expense_apply_rules": "PASS",
+          "expense_decide_verdict": "PASS"
+        },
+        "overall_result": "PASS",
+        "first_failed_stage": null
+      },
+      {
+        "claim_id": "claim_015",
+        "hard_case": false,
+        "hard_case_type": null,
+        "stages": {
+          "expense_extract_items": "PASS",
+          "expense_check_arithmetic": "PASS",
+          "expense_apply_rules": "PASS",
+          "expense_decide_verdict": "PASS"
+        },
+        "overall_result": "PASS",
+        "first_failed_stage": null
+      },
+      {
+        "claim_id": "claim_016",
+        "hard_case": false,
+        "hard_case_type": null,
+        "stages": {
+          "expense_extract_items": "PASS",
+          "expense_check_arithmetic": "PASS",
+          "expense_apply_rules": "PASS",
+          "expense_decide_verdict": "PASS"
+        },
+        "overall_result": "PASS",
+        "first_failed_stage": null
+      },
+      {
+        "claim_id": "claim_017",
+        "hard_case": false,
+        "hard_case_type": null,
+        "stages": {
+          "expense_extract_items": "PASS",
+          "expense_check_arithmetic": "PASS",
+          "expense_apply_rules": "PASS",
+          "expense_decide_verdict": "PASS"
+        },
+        "overall_result": "PASS",
+        "first_failed_stage": null
+      },
+      {
+        "claim_id": "claim_018",
+        "hard_case": false,
+        "hard_case_type": null,
+        "stages": {
+          "expense_extract_items": "PASS",
+          "expense_check_arithmetic": "PASS",
+          "expense_apply_rules": "PASS",
+          "expense_decide_verdict": "PASS"
+        },
+        "overall_result": "PASS",
+        "first_failed_stage": null
+      },
+      {
+        "claim_id": "claim_019",
+        "hard_case": false,
+        "hard_case_type": null,
+        "stages": {
+          "expense_extract_items": "PASS",
+          "expense_check_arithmetic": "PASS",
+          "expense_apply_rules": "PASS",
+          "expense_decide_verdict": "PASS"
+        },
+        "overall_result": "PASS",
+        "first_failed_stage": null
+      },
+      {
+        "claim_id": "claim_020",
+        "hard_case": false,
+        "hard_case_type": null,
+        "stages": {
+          "expense_extract_items": "PASS",
+          "expense_check_arithmetic": "PASS",
+          "expense_apply_rules": "PASS",
+          "expense_decide_verdict": "PASS"
+        },
+        "overall_result": "PASS",
+        "first_failed_stage": null
+      },
+      {
+        "claim_id": "claim_021",
+        "hard_case": false,
+        "hard_case_type": null,
+        "stages": {
+          "expense_extract_items": "PASS",
+          "expense_check_arithmetic": "PASS",
+          "expense_apply_rules": "PASS",
+          "expense_decide_verdict": "PASS"
+        },
+        "overall_result": "PASS",
+        "first_failed_stage": null
+      },
+      {
+        "claim_id": "claim_022",
+        "hard_case": false,
+        "hard_case_type": null,
+        "stages": {
+          "expense_extract_items": "PASS",
+          "expense_check_arithmetic": "PASS",
+          "expense_apply_rules": "PASS",
+          "expense_decide_verdict": "PASS"
+        },
+        "overall_result": "PASS",
+        "first_failed_stage": null
+      },
+      {
+        "claim_id": "claim_023",
+        "hard_case": false,
+        "hard_case_type": null,
+        "stages": {
+          "expense_extract_items": "PASS",
+          "expense_check_arithmetic": "PASS",
+          "expense_apply_rules": "PASS",
+          "expense_decide_verdict": "PASS"
+        },
+        "overall_result": "PASS",
+        "first_failed_stage": null
+      },
+      {
+        "claim_id": "claim_024",
+        "hard_case": false,
+        "hard_case_type": null,
+        "stages": {
+          "expense_extract_items": "PASS",
+          "expense_check_arithmetic": "PASS",
+          "expense_apply_rules": "PASS",
+          "expense_decide_verdict": "PASS"
+        },
+        "overall_result": "PASS",
+        "first_failed_stage": null
+      },
+      {
+        "claim_id": "claim_025",
+        "hard_case": false,
+        "hard_case_type": null,
+        "stages": {
+          "expense_extract_items": "PASS",
+          "expense_check_arithmetic": "PASS",
+          "expense_apply_rules": "PASS",
+          "expense_decide_verdict": "PASS"
+        },
+        "overall_result": "PASS",
+        "first_failed_stage": null
+      },
+      {
+        "claim_id": "claim_026",
+        "hard_case": false,
+        "hard_case_type": null,
+        "stages": {
+          "expense_extract_items": "PASS",
+          "expense_check_arithmetic": "PASS",
+          "expense_apply_rules": "FAIL",
+          "expense_decide_verdict": "FAIL"
+        },
+        "overall_result": "FAIL",
+        "first_failed_stage": "expense_apply_rules"
+      },
+      {
+        "claim_id": "claim_027",
+        "hard_case": false,
+        "hard_case_type": null,
+        "stages": {
+          "expense_extract_items": "PASS",
+          "expense_check_arithmetic": "PASS",
+          "expense_apply_rules": "PASS",
+          "expense_decide_verdict": "PASS"
+        },
+        "overall_result": "PASS",
+        "first_failed_stage": null
+      },
+      {
+        "claim_id": "claim_028",
+        "hard_case": false,
+        "hard_case_type": null,
+        "stages": {
+          "expense_extract_items": "PASS",
+          "expense_check_arithmetic": "PASS",
+          "expense_apply_rules": "PASS",
+          "expense_decide_verdict": "PASS"
+        },
+        "overall_result": "PASS",
+        "first_failed_stage": null
+      },
+      {
+        "claim_id": "claim_029",
+        "hard_case": false,
+        "hard_case_type": null,
+        "stages": {
+          "expense_extract_items": "PASS",
+          "expense_check_arithmetic": "PASS",
+          "expense_apply_rules": "PASS",
+          "expense_decide_verdict": "PASS"
+        },
+        "overall_result": "PASS",
+        "first_failed_stage": null
+      },
+      {
+        "claim_id": "claim_030",
+        "hard_case": false,
+        "hard_case_type": null,
+        "stages": {
+          "expense_extract_items": "PASS",
+          "expense_check_arithmetic": "PASS",
+          "expense_apply_rules": "PASS",
+          "expense_decide_verdict": "PASS"
+        },
+        "overall_result": "PASS",
+        "first_failed_stage": null
+      }
+    ]
+  },
+  "recommendation": {
+    "config_name": "Single Prompt Baseline",
+    "langfuse_run_name": "day16_budget_single",
+    "hard_case_verdict_accuracy": 1.0,
+    "overall_verdict_accuracy": 0.9667,
+    "breach_accuracy": 0.9333,
+    "average_latency_ms": 10.55,
+    "p95_latency_ms": 10.86,
+    "cost_per_1000_claims_usd": 0.35,
+    "meets_accuracy_target": true,
+    "meets_latency_target": true,
+    "meets_cost_target": true,
+    "meets_all_targets": true
+  }
+}

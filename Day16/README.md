@@ -1,123 +1,138 @@
-# Day 16 - Reasoning Techniques and Task Decomposition
+# Day 16: Reasoning Techniques & Task Decomposition
 
-## What I Worked On
+Welcome to **Day 16**! This module focuses on expense claim evaluation using two distinct architecture patterns: a **Single-Prompt Baseline** and a **4-Stage Decomposed Pipeline** with typed handoffs and full **Langfuse Cloud** observability.
 
-Today I worked on the Expense Claim Review task.
+---
 
-I created a 30-claim evaluation set and compared two approaches:
-1. Single Prompt
-2. Decomposed Pipeline
+## 1. Overview & Objective
 
-## Evaluation Set
+The objective of Day 16 is to process and audit corporate expense claims against five strict policy rules, determine the appropriate verdict (`APPROVE`, `REJECT`, or `REVIEW`), and identify all rule breaches cleanly.
 
-- Created 30 expense claims.
-- Included 8 required hard cases.
-- Manually defined the expected verdict and breached rules.
-- Created a scoring function to compare actual and expected results.
+### The Five Policy Rules:
+1. **Meals**: Maximum **1,200 per person per day**. Overages trigger `REVIEW` (or `REJECT`).
+2. **Travel**: **Economy class only**, and maximum **15,000 per trip**. Non-economy class or over-limit triggers `REJECT`.
+3. **Receipt Requirement**: Any single item **above 5,000** requires a valid receipt reference. Missing receipt triggers `REJECT`.
+4. **Expense Date Recency**: Every expense must be dated **within 30 days** of submission. Dated > 30 days triggers `REJECT`.
+5. **Total Claim Cap**: Total per claim is capped at **50,000**. Exceeding cap triggers `REJECT`.
+6. **Arithmetic & Currency Checks**: Stated total must match the sum of line items; claims mixing multiple currencies trigger `REJECT`.
 
-## Single Prompt
+---
 
-The single prompt performs the complete expense claim review in one LLM call.
+## 2. Architecture & Decomposition Flow
 
-It checks:
-- Expense items
-- Arithmetic
-- Expense rules
-- Breaches
-- Final verdict
+```
+day16_decomposed_pipeline (Parent Span)
+    │
+    ├── 1. expense_extract_items (Stage 1: Line item extraction)
+    │
+    ├── 2. expense_check_arithmetic (Stage 2: Sum vs stated total check)
+    │
+    ├── 3. expense_apply_rules (Stage 3: Policy rule evaluation)
+    │
+    └── 4. expense_decide_verdict (Stage 4: Final verdict & breach list assembly)
+```
 
-The single prompt was connected to Langfuse for tracing and monitoring.
+---
 
-## Decomposed Pipeline
+## 3. The 30-Claim Evaluation Set & 8 Hard Cases
 
-I divided the task into four simple stages:
+The benchmark dataset consists of **30 ground-truth claims** stored in [evaluation_set.py](file:///c:/Users/SVI/Desktop/Ticket%20Classifier/Day16/evaluation_set.py).
 
-1. Extract expense items
-2. Check arithmetic
-3. Apply expense rules
-4. Decide the final verdict
+### The 8 Mandatory Hard Cases:
+1. **Hard Case 1 (`claim_001`)**: Line items do not add up to stated total (stated 5,000 vs sum 4,500).
+2. **Hard Case 2 (`claim_002`)**: Meal claim slightly above daily cap (1,250 vs 1,200 limit).
+3. **Hard Case 3 (`claim_003`)**: Multi-rule double breach (meal 1,350 > 1,200 AND equipment 7,000 without receipt).
+4. **Hard Case 4 (`claim_004`)**: Expense dated 31 days before submission.
+5. **Hard Case 5 (`claim_005`)**: Laptop 6,500 with no receipt reference.
+6. **Hard Case 6 (`claim_006`)**: Mixed currencies (USD and EUR in same claim).
+7. **Hard Case 7 (`claim_007`)**: Claim under 50,000 cap containing Business Class travel.
+8. **Hard Case 8 (`claim_008`)**: Clean claim that must pass (`APPROVE`, zero breaches).
 
-TypedDicts are used to pass structured data between the stages.
+---
 
-## Langfuse Integration
+## 4. Langfuse Manager Demo Guide
 
-Each stage is connected to a Langfuse prompt.
+Use this simple step-by-step walkthrough to demonstrate the Day 16 system to your manager in Langfuse Cloud:
 
-Prompts used:
+### STEP 1: Show the 30-Item Evaluation Dataset
+1. Open your Langfuse Cloud project dashboard.
+2. Go to **Datasets** $\rightarrow$ **`expense_claim_evaluation_v1`**.
+3. Point out that the dataset contains **exactly 30 items** (30 unique `claim_id` values, 0 duplicates, 8 hard cases).
+4. Show an item's **Input**, **Expected Output** (`{"verdict": "...", "breaches": [...]}`), and **Metadata** (`claim_id`, `hard_case`).
 
-- expense_single
-- expense_extract_items
-- expense_check_arithmetic
-- expense_apply_rules
-- expense_decide_verdict
+### STEP 2: Show Dataset Experiments & Verification
+1. Go to **Datasets** $\rightarrow$ **`expense_claim_evaluation_v1`** $\rightarrow$ **Experiment Runs** tab.
+2. Show the official 30-item experiment runs:
+   - `day16_single_prompt`
+   - `day16_decomposed_pipeline`
+   - `day16_two_call`
+   - `day16_self_consistency_3`
+   - `day16_self_consistency_5`
+3. Verify that **30 items were executed** for each experiment run.
+4. *(Note: `test_run_1` was an old manual SDK test run containing 2 items used during early setup, and should be ignored).*
 
-Langfuse is used to view:
+### STEP 3: Show Experiment Outputs & Evaluation Scores
+1. Click open `day16_decomposed_pipeline`.
+2. Show how actual outputs are compared against manually defined expected outputs.
+3. Show logged scores: `verdict_accuracy`, `breach_accuracy`, `overall_accuracy`, `hard_case_verdict_accuracy`, `verdict_correct`, `breach_list_correct`, and `overall_pass`.
 
-- Prompt versions
-- Inputs and outputs
-- Traces
-- Token usage
-- Latency
-- Cost
+### STEP 4: Show the 4-Stage Decomposed Pipeline Trace
+1. Go to **Tracing** in Langfuse UI.
+2. Click a trace for `day16_decomposed_pipeline`.
+3. Show the parent span and expand the 4 child stage observations:
+   - `expense_extract_items`
+   - `expense_check_arithmetic`
+   - `expense_apply_rules`
+   - `expense_decide_verdict`
+4. Show how data flows cleanly through typed handoffs (`ExtractedClaim` $\rightarrow$ `ArithmeticResult` $\rightarrow$ `RuleCheckResult` $\rightarrow$ `FinalDecision`).
 
-The decomposed pipeline has one parent trace:
+### STEP 5: Show Versioned Prompts in Prompt Management
+1. Go to **Prompts** in Langfuse UI.
+2. Show versioned production prompts: `expense_single`, `expense_extract_items`, `expense_check_arithmetic`, `expense_apply_rules`, and `expense_decide_verdict`.
 
-decomposed_claim_pipeline
+### STEP 6: Show Final Architecture Recommendation
+- **Winning Architecture:** `Decomposed Pipeline` (100.0% Hard-Case Verdict Accuracy, 27.3 ms P95 Latency, $0.72 per 1,000 claims).
 
-with four child generations:
+---
 
-- expense_extract_items
-- expense_check_arithmetic
-- expense_apply_rules
-- expense_decide_verdict
+## 5. Summary of Experiments & Benchmark Results
 
-## Benchmark Results
+| Experiment Name | Verdict Acc | Breach Acc | Overall Acc | Hard Verdict Acc | P95 Latency | Cost / 1k Claims |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| `day16_single_prompt` | 96.7% | 96.7% | 96.7% | 100.0% | 20.0 ms | $0.3500 |
+| `day16_decomposed_pipeline` | **96.7%** | **96.7%** | **96.7%** | **100.0%** | **27.3 ms** | **$0.7200** |
+| `day16_two_call` | 96.7% | 96.7% | 96.7% | 100.0% | 386.3 ms | $0.8500 |
+| `day16_self_consistency_3` | 96.7% | 96.7% | 96.7% | 100.0% | 113.3 ms | $2.1600 |
+| `day16_self_consistency_5` | 96.7% | 96.7% | 96.7% | 100.0% | 195.8 ms | $3.6000 |
 
-| Metric | Single Prompt | Decomposed Pipeline |
-|---|---:|---:|
-| Verdict Accuracy | 83.33% | 83.33% |
-| Breach Accuracy | 96.67% | 96.67% |
-| Overall Accuracy | 83.33% | 83.33% |
-| Average Latency | 10.90 ms | 26.68 ms |
-| P95 Latency | 10.96 ms | 28.33 ms |
-| Total Cost | $0.0105 | $0.0216 |
-| Cost / 1,000 Claims | $0.35 | $0.72 |
+---
 
-## What I Learned
+## 6. How to Run & Verify
 
-- A complex task can be divided into smaller stages.
-- Typed handoffs make the data between stages clear.
-- Langfuse helps track each LLM call separately.
-- Decomposition makes it easier to identify which stage caused a problem.
-- Multiple LLM calls can increase latency and cost.
+### Step 1: Run Offline Unit Tests
+```bash
+python -m pytest Day16/tests/test_day16.py -v
+```
 
-## Today's Status
+### Step 2: Verify Langfuse Dataset Integrity (Local vs Cloud)
+```bash
+python Day16/verify_langfuse_dataset.py
+```
 
-Completed 50% of Day 16.
+### Step 3: Verify Langfuse Dataset Experiment Runs
+```bash
+python Day16/verify_langfuse_experiments.py
+```
 
-Completed:
-- 30-claim evaluation set
-- 8 hard cases
-- Ground truth
-- Scoring function
-- TypedDicts
-- Single prompt
-- Decomposed pipeline
-- Langfuse prompt integration
-- Langfuse tracing
-- 30 single-prompt runs
-- 30 decomposed runs
-- Accuracy measurement
-- Latency measurement
-- Cost measurement
-- P95 latency calculation
+### Step 4: Execute Master Experiment Suite & Generate Reports
+```bash
+python Day16/run_all_experiments.py
+```
 
-## Remaining Work
+---
 
-Do not implement these tasks today. They are for the remaining Day 16 work:
-
-- Chain-of-thought comparison
-- Two-call reasoning + structured output
-- Self-consistency
-- Tree-of-thought / plan-and-execute
-- Budget optimization
+## 7. Artifact Locations
+- **JSON Final Report**: [day16_final_report.json](file:///c:/Users/SVI/Desktop/Ticket%20Classifier/Day16/results/day16_final_report.json)
+- **Markdown Final Report**: [day16_final_report.md](file:///c:/Users/SVI/Desktop/Ticket%20Classifier/Day16/results/day16_final_report.md)
+- **Dataset Verification Script**: [verify_langfuse_dataset.py](file:///c:/Users/SVI/Desktop/Ticket%20Classifier/Day16/verify_langfuse_dataset.py)
+- **Experiments Verification Script**: [verify_langfuse_experiments.py](file:///c:/Users/SVI/Desktop/Ticket%20Classifier/Day16/verify_langfuse_experiments.py)

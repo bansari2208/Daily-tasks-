@@ -189,7 +189,7 @@ def stage4_decide_verdict(
         has_hard_reject = False
         for b in all_breaches:
             b_lower = b.lower()
-            if any(k in b_lower for k in ["older than 30 days", "mixed currencies", "business class", "first class", "cap exceeded", "15,000", "missing receipt"]):
+            if any(k in b_lower for k in ["older than 30 days", "mixed currencies", "business class", "first class", "total claim cap", "15,000", "missing receipt"]):
                 has_hard_reject = True
                 break
 
