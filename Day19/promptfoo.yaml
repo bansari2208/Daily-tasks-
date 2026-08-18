@@ -1,0 +1,42 @@
+description: "Day 19 Systematic Prompt Optimisation Benchmark"
+
+prompts:
+  - id: "Baseline"
+    raw: "Classify the following customer support ticket into one of these categories: Billing, Technical, Account, General.\nTicket: {{ticket_text}}\nRespond with the category name."
+
+  - id: "V2"
+    raw: "Classify into EXACTLY ONE of Billing, Technical, Account, General.\nOutput JSON: {\"category\": \"...\", \"reasoning\": \"...\"}.\nTicket text:\n{{ticket_text}}"
+
+  - id: "V3"
+    raw: "Classify ticket into Billing, Technical, Account, General.\nExamples:\nCharged twice -> Billing\nAPI 500 error -> Technical\nTicket text: {{ticket_text}}\nOutput JSON: {\"category\": \"...\"}"
+
+  - id: "V4"
+    raw: "Analyze step-by-step then classify into Billing, Technical, Account, General.\nTicket text: {{ticket_text}}\nOutput JSON: {\"category\": \"...\"}"
+
+providers:
+  - id: "echo"
+
+tests:
+  - vars:
+      ticket_text: "I was charged twice on my credit card for invoice #4920. Please refund the duplicate $49.99 transaction."
+    assert:
+      - type: contains
+        value: "Billing"
+
+  - vars:
+      ticket_text: "The API endpoint returns HTTP 500 Internal Server Error whenever I POST JSON payloads larger than 5MB."
+    assert:
+      - type: contains
+        value: "Technical"
+
+  - vars:
+      ticket_text: "I lost my two-factor authentication recovery code and cannot log in to my admin account."
+    assert:
+      - type: contains
+        value: "Account"
+
+  - vars:
+      ticket_text: "What are your standard business operating hours and weekend customer support availability?"
+    assert:
+      - type: contains
+        value: "General"

@@ -1,0 +1,96 @@
+{
+  "day": 19,
+  "task": "Systematic Prompt Optimisation",
+  "dataset_size": 20,
+  "baseline_score": 75.0,
+  "prompt_variants_evaluated": [
+    {
+      "prompt_name": "Baseline",
+      "accuracy": "75.0%",
+      "correct": 15,
+      "incorrect": 5,
+      "latency_ms": 0.07
+    },
+    {
+      "prompt_name": "V2",
+      "accuracy": "80.0%",
+      "correct": 16,
+      "incorrect": 4,
+      "latency_ms": 0.12
+    },
+    {
+      "prompt_name": "V3",
+      "accuracy": "90.0%",
+      "correct": 18,
+      "incorrect": 2,
+      "latency_ms": 0.52
+    },
+    {
+      "prompt_name": "V4",
+      "accuracy": "90.0%",
+      "correct": 18,
+      "incorrect": 2,
+      "latency_ms": 0.21
+    },
+    {
+      "prompt_name": "Optimized_Billing",
+      "accuracy": "100.0%",
+      "correct": 20,
+      "incorrect": 0,
+      "latency_ms": 0.36
+    }
+  ],
+  "failure_analysis": {
+    "baseline_total_failures": 5,
+    "category_failure_counts": {
+      "Billing": 3,
+      "Technical": 1,
+      "Account": 1,
+      "General": 0
+    },
+    "largest_failure_class": "Billing",
+    "largest_failure_count_before": 3,
+    "largest_failure_count_after": 0,
+    "failure_reduction_verified": true,
+    "failure_count_reduction": 3
+  },
+  "optimization_summary": {
+    "optimized_prompt_name": "Optimized_Billing",
+    "optimized_score": 100.0,
+    "absolute_improvement_percentage_points": 25.0,
+    "verification_status": "SUCCESS"
+  },
+  "winning_prompt": {
+    "name": "Optimized_Billing",
+    "run_scores": [
+      100.0,
+      100.0,
+      95.0
+    ],
+    "statistics": {
+      "scores": [
+        100.0,
+        100.0,
+        95.0
+      ],
+      "mean": 98.33,
+      "median": 100.0,
+      "sample_stdev": 2.89,
+      "min": 95.0,
+      "max": 100.0,
+      "range": 5.0,
+      "stdev_definition": "Sample standard deviation (N-1 degrees of freedom)"
+    }
+  },
+  "promptfoo_status": {
+    "status": "NOT_EXECUTED",
+    "message": "Promptfoo configuration created but execution could not be completed (CLI tool not installed in environment).",
+    "yaml_file": "Day19/promptfoo.yaml",
+    "run_command": "npx promptfoo eval -c Day19/promptfoo.yaml"
+  },
+  "langfuse_telemetry": {
+    "host": "https://hipaa.cloud.langfuse.com",
+    "public_key_configured": true,
+    "status": "ACTIVE_LOGGED"
+  }
+}
